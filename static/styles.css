@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,500,700);
 
 
 .base {
@@ -7,35 +7,85 @@
     color: white;
 }
 
-.header{
+.header {
     background-color: #000000;
     padding: 0;
+    height: 60px;
 }
 
-.header h1{
+.header h1 {
     font-weight: 700;
 }
 
-.logo{
-    padding: 5px 5px 2px 5px;
+.logo {
+    height: 50px;
+    vertical-align: middle;
+    padding: 5px;
 }
 
-.dashboard{
+.menu {
     display: none;
-    margin: 0 10% 0 10%;
-    background-color: white;
-    width: 80%;
+    position: absolute;
+    top:0px;
+    right:0px;
+    background-color: #000000;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-weight: 500;
+    color: white;
+    height: 60px;
+
 }
 
+.menu li {
+    float: right;
+    padding: 5px;
+    transition: 0.3s;
+}
 
-.title{
+.menu li:hover {
+    cursor: pointer;
+    background-color: white;
+}
+
+.menu .menu-active {
+    background-color: #CF2038;
+}
+
+.menu li a {
+    display: block;
     color: white;
     text-align: center;
+    padding: 14px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.menu li a:hover {
+    color: black;
+}
+
+
+
+.dashboard {
+    display: none;
+    margin: 0;
+    background-color: white;
+}
+
+
+.title {
+    color: white;
+    text-align: center;
+    font-size: 24px;
 }
 
 .login-page {
     width: 360px;
-    padding: 12% 0 0;
+    padding: 10% 0 0;
     margin: auto;
 }
 
@@ -81,10 +131,11 @@
     background: #CF2038;
 }
 
-.form .message {
-    margin: 15px 0 0;
-    color: #b3b3b3;
-    font-size: 12px;
+.login-message {
+    display: none;
+    margin: 25px 0 0 0;
+    color: #CF2038;
+    font-size: 16px;
 }
 
 .form .register-form {
