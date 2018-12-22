@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 from flask_jwt import JWT
 
@@ -12,10 +12,15 @@ api = Api(app)
 
 jwt = JWT(app, authenticate, identity)
 
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
 api.add_resource(Item, '/item/<string:name>')
 api.add_resource(ItemList, '/items')
 api.add_resource(UserRegister, '/register')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
-
