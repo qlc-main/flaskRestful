@@ -63,17 +63,22 @@ function ajax_get_api() {
 
 $(function () {
 
-    //$('.menu').hide();
-
     $('.dashboard').height($(window).height() - $('.header').height());
-
-    $('.menu-logout').on('click', function () {
-        logout_success();
-    });
 
     $('.login-page button').on('click', function (event) {
         event.preventDefault();
         ajax_auth_api();
     });
+
+    $('.menu li').on('click', function (event) {
+        $('.menu li').removeClass('menu-active');
+        if (event.target.id == "menu-logout") {
+            logout_success();
+        } else {
+            $(event.target).addClass('menu-active');
+            //ajax_get_api();
+        }
+    });
+
 
 });
