@@ -22,6 +22,7 @@
         <li id="menu-logout">Logout</li>
         <li id="menu-commissioning">Commissioning</li>
         <li id="menu-configuration">Configuration</li>
+        <li id="menu-charts">Charts</li>
         <li id="menu-dashboard">Dashboard</li>
     </ul>
 </div>
@@ -42,14 +43,38 @@
 
 <div class="dashboard">
     <div class="sidebar">
+        <div class="search">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
         <ul>
-            <li class="search">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </li>
-            <li>Meter</li>
-            <li>Phase</li>
-            <li>Parameter</li>
+            <li>Meter Name</li>
+            <ul>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Bravo-2P</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Minicloset</li>
+            </ul>
+            <li>Meter Points</li>
+            <ul>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> 1</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> 2</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> 3</li>
+            </ul>
+            <li>Phases</li>
+            <ul>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> A</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> B</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> C</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Total</li>
+            </ul>
+            <li>Parameters</li>
+            <ul>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Voltage</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Current</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Active</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Reactive</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Apparent</li>
+                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Factor</li>
+            </ul>
         </ul>
     </div>
 </div>
