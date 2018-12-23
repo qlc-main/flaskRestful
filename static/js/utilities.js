@@ -2,7 +2,9 @@ var jwtToken = "";
 
 function login_success(data) {
     jwtToken = data.access_token;
-    $('.menu').show("slide", {direction: "right"}, 200);
+    $('.menu').show("slide", {direction: "right"}, 200, function(){
+        $('#menu-dashboard').addClass('menu-active');
+    });
     $('.login-page').hide("clip", {direction: "horizontal"}, 200, function () {
         $('.dashboard').show("clip", {direction: "horizontal"}, 200);
     });
@@ -63,7 +65,7 @@ function ajax_get_api() {
 
 $(function () {
 
-    $('.dashboard').height($(window).height() - $('.header').height());
+    $('.dashboard, .sidebar').height($(window).height() - $('.header').height());
 
     $('.login-page button').on('click', function (event) {
         event.preventDefault();

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>QNect Config Page</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -16,9 +17,10 @@
 </head>
 <body>
 <div class="header">
-    <img class="logo" src="/static/img/logo.png" href="https://www.quadlogic.com/" target="_blank">
+    <img class="logo" src="/static/img/logo.png">
     <ul class="menu">
         <li id="menu-logout">Logout</li>
+        <li id="menu-commissioning">Commissioning</li>
         <li id="menu-configuration">Configuration</li>
         <li id="menu-dashboard">Dashboard</li>
     </ul>
@@ -39,8 +41,19 @@
 </div>
 
 <div class="dashboard">
-
+    <div class="sidebar">
+        <ul>
+            <li class="search">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </li>
+            <li>Meter</li>
+            <li>Phase</li>
+            <li>Parameter</li>
+        </ul>
+    </div>
 </div>
+
 
 </body>
 </html>
