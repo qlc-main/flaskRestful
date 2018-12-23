@@ -34,7 +34,7 @@ function ajax_auth_api() {
         type: "POST",
         dataType: "json",
         contentType: "application/json",
-        url: "/auth",
+        url: "/login",
         data: JSON.stringify({username: user, password: pass}),
         success: login_success,
         error: login_fail
@@ -56,7 +56,7 @@ function ajax_get_api() {
         dataType: "json",
         contentType: "application/json",
         url: "/item/chair",
-        headers: {"Authorization": 'JWT ' + jwtToken},
+        headers: {"Authorization": 'Bearer ' + jwtToken},
         success: alert_json,
         error: alert_json
     });
@@ -78,7 +78,7 @@ $(function () {
             logout_success();
         } else {
             $(event.target).addClass('menu-active');
-            //ajax_get_api();
+            ajax_get_api();
         }
     });
 
