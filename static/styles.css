@@ -251,6 +251,10 @@
     display: block;
 }
 
+.sidebar ul ul li input[type="checkbox"]{
+    float: right;
+}
+
 .sidebar ul ul li:hover{
     background-color: #666666;
 }

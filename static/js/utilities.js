@@ -78,7 +78,7 @@ $(function () {
             logout_success();
         } else {
             $(event.target).addClass('menu-active');
-            ajax_get_api();
+            //ajax_get_api();
         }
     });
 
