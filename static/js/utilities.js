@@ -2,11 +2,24 @@ var jwtToken = "";
 
 function login_success(data) {
     jwtToken = data.access_token;
-    $('.menu').show("slide", {direction: "right"}, 200, function(){
+    $('.menu').show("slide", {direction: "right"}, 200, function () {
         $('#menu-dashboard').addClass('menu-active');
     });
     $('.login-page').hide("clip", {direction: "horizontal"}, 200, function () {
         $('.dashboard').show("clip", {direction: "horizontal"}, 200);
+        insert_item(1);
+        insert_item(2);
+        insert_item(3);
+        insert_item(4);
+        insert_item(5);
+        insert_item(6);
+        insert_item(7);
+        insert_item(8);
+        insert_item(9);
+        insert_item(10);
+        insert_item(11);
+        insert_item(12);
+
     });
 }
 
@@ -19,6 +32,7 @@ function logout_success() {
         jwtToken = "";
         $('.menu').hide("slide", {direction: "right"}, 200);
         $('.dashboard').hide("clip", {direction: "horizontal"}, 200, function () {
+            destroy_charts();
             $('.login-page').show("clip", {direction: "horizontal"}, 200);
         });
     }
@@ -62,10 +76,26 @@ function ajax_get_api() {
     });
 }
 
+function destroy_charts(){
+    for (let i=0; i<charts.length; i++) {
+        charts[i].destroy();
+    }
+    $('.items-page').empty();
+}
+
+function insert_item(i) {
+    $('.items-page').append(`<div class="item">
+<div class="item-power-chart" id="power-chart-${i}"></div>
+<div class="item-energy-chart" id="energy-chart-${i}"></div>
+<div class="item-title">Meter ${i} - Apartment B</div>
+</div>`);
+    draw_item(i);
+}
+
 
 $(function () {
 
-    $('.dashboard, .sidebar').height($(window).height() - $('.header').height());
+    $('.dashboard, .sidebar, .items-page').height($(window).height() - $('.header').height());
 
     $('.login-page button').on('click', function (event) {
         event.preventDefault();
@@ -82,5 +112,8 @@ $(function () {
         }
     });
 
+    $('.sidebar').sortable({
+          items: "li"
+    });
 
 });
