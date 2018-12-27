@@ -6,19 +6,9 @@ function login_success(data) {
         $('#menu-dashboard').addClass('menu-active');
     });
     $('.login-page').hide("clip", {direction: "horizontal"}, 200, function () {
-        $('.dashboard').show("clip", {direction: "horizontal"}, 200);
-        insert_item(1);
-        insert_item(2);
-        insert_item(3);
-        insert_item(4);
-        insert_item(5);
-        insert_item(6);
-        insert_item(7);
-        insert_item(8);
-        insert_item(9);
-        insert_item(10);
-        insert_item(11);
-        insert_item(12);
+        $('.dashboard').show("clip", {direction: "horizontal"}, 200, function(){
+            insert_item(12);
+        });
 
     });
 }
@@ -76,20 +66,23 @@ function ajax_get_api() {
     });
 }
 
-function destroy_charts(){
-    for (let i=0; i<charts.length; i++) {
-        charts[i].destroy();
+function destroy_charts() {
+    while (charts.length) {
+        charts[charts.length - 1].destroy();
+        charts.pop();
     }
     $('.items-page').empty();
 }
 
-function insert_item(i) {
-    $('.items-page').append(`<div class="item">
+function insert_item(count) {
+    for (let i = 1; i <= count; i++) {
+        $('.items-page').append(`<div class="item">
 <div class="item-power-chart" id="power-chart-${i}"></div>
 <div class="item-energy-chart" id="energy-chart-${i}"></div>
 <div class="item-title">Meter ${i} - Apartment B</div>
 </div>`);
-    draw_item(i);
+        draw_item(i);
+    }
 }
 
 
@@ -104,16 +97,21 @@ $(function () {
 
     $('.menu li').on('click', function (event) {
         $('.menu li').removeClass('menu-active');
-        if (event.target.id == "menu-logout") {
+        let thisTarget = event.target
+        if (thisTarget.id == "menu-logout") {
             logout_success();
         } else {
-            $(event.target).addClass('menu-active');
+            $(thisTarget).addClass('menu-active');
+            destroy_charts();
+            if (thisTarget.id == "menu-dashboard") {
+                insert_item(12);
+            }
             //ajax_get_api();
         }
     });
 
     $('.sidebar').sortable({
-          items: "li"
+        items: "li"
     });
 
 });
