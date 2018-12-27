@@ -1,8 +1,13 @@
-let charts=[];
+let charts = [];
 
 function draw_item(chartIndex) {
     let chart;
-    chart = Highcharts.chart('power-chart-'+chartIndex, {
+
+    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let d = new Date();
+    let thisMonth = months[d.getMonth()];
+
+    chart = Highcharts.chart('power-chart-' + chartIndex, {
 
         chart: {
             polar: true
@@ -50,7 +55,7 @@ function draw_item(chartIndex) {
             min: 0,
             max: 360,
             labels: {
-              distance: 5,
+                distance: 5,
                 formatter: function () {
                     return this.value + '°';
                 }
@@ -177,9 +182,14 @@ function draw_item(chartIndex) {
 
     charts.push(chart);
 
-    chart=Highcharts.chart('energy-chart-'+chartIndex, {
+    chart = Highcharts.chart('energy-chart-' + chartIndex, {
         chart: {
-            type: 'column'
+            type: 'column',
+            events: {
+                click: function (event) {
+                    alert();
+                }
+            }
         },
         skipClone: true,
         legend: {
@@ -205,7 +215,7 @@ function draw_item(chartIndex) {
         },
         tooltip: {
             formatter: function () {
-                return "Day " + this.x + ": " + this.y + "kWh";
+                return thisMonth + " " + (parseInt(this.x) + 1) + ": " + this.y + "kWh";
             }
         },
         plotOptions: {
@@ -218,7 +228,7 @@ function draw_item(chartIndex) {
             name: 'Energy',
             data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4,
                 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4,
-                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5
+                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6
             ]
 
         }]
