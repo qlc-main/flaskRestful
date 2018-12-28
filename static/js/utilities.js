@@ -1,12 +1,81 @@
 var jwtToken = "";
 
+
+function get_power() {
+
+    let phase_count = 3;
+
+    let phases = [];
+    let total_active = 0;
+    let total_reactive = 0;
+    let total_apparent = 0;
+    let total_current = 0;
+
+    for (let i = 0; i < phase_count; i++) {
+
+        let voltage = 120 + 2 * 5 * ((Math.random() * 2 - 1).toFixed(2));
+        let current = 1 * (Math.random() * 10).toFixed(2);
+        let factor = 0.8 + 1 * (0.2 * Math.random()).toFixed(2);
+        let angle = 1 * (Math.acos(factor) * 180 / Math.PI).toFixed(2);
+        let apparent = voltage * current;
+        let active = apparent * factor;
+        let reactive = apparent * Math.sin(Math.acos(factor));
+
+        let instant = {
+            voltage: voltage,
+            current: current,
+            angle: angle,
+            power: {
+                apparent: apparent,
+                active: active,
+                reactive: reactive,
+            }
+        };
+
+        total_current += current;
+        total_active += active;
+        total_reactive += reactive;
+        total_apparent += apparent;
+
+        phases.push(instant);
+    }
+
+    let total = {
+        current: total_current,
+        power: {
+            apparent: total_apparent,
+            active: total_active,
+            reactive: total_reactive
+        }
+    }
+
+    phases.push(total)
+
+    return phases;
+
+}
+
+function get_energy() {
+    let now = new Date();
+    let day = now.getDate();
+    let day_in_month = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+
+    let values = [];
+    for (let i = 0; i < day_in_month; i++) {
+        let value = i < day ? 1 * (Math.random() * 10 + 0.1).toFixed(2) : 0;
+        values.push(value);
+    }
+    return values;
+}
+
 function login_success(data) {
     jwtToken = data.access_token;
     $('.menu').show("slide", {direction: "right"}, 200, function () {
         $('#menu-dashboard').addClass('menu-active');
     });
     $('.login-page').hide("clip", {direction: "horizontal"}, 200, function () {
-        $('.dashboard').show("clip", {direction: "horizontal"}, 200, function(){
+        $('.dashboard').show("clip", {direction: "horizontal"}, 200, function () {
+
             insert_item(12);
         });
 
@@ -81,7 +150,7 @@ function insert_item(count) {
 <div class="item-energy-chart" id="energy-chart-${i}"></div>
 <div class="item-title">Meter ${i} - Apartment B</div>
 </div>`);
-        draw_item(i);
+        draw_item(i, get_power(), get_energy());
     }
 }
 

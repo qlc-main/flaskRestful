@@ -1,6 +1,7 @@
 let charts = [];
 
-function draw_item(chartIndex) {
+function draw_item(chartIndex, phases, energy) {
+
     let chart;
 
     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -33,7 +34,7 @@ function draw_item(chartIndex) {
                     let string = "<span style='font-weight:bold;color: " + this.series.color + "'>Phase " + phase + "<br/>";
                     if (parameter == "Voltage")
                         return string + parameter + ": " + this.y + "V @" + 60 + "Hz<br/>" +
-                            "S.Power: " + 7 + "kVA ∠" + 5 + "°";
+                            "S.Power: " + 7 + "kVA ∠" + this.x + "°";
                     if (parameter == "Current")
                         return string + parameter + ": " + this.y + "A<br/>" +
                             "R.Power: " + 2.1 + " kW";
@@ -50,7 +51,7 @@ function draw_item(chartIndex) {
         },
 
         xAxis: {
-            tickInterval: 45,
+            tickInterval: 60,
             reversed: true,
             min: 0,
             max: 360,
@@ -86,7 +87,7 @@ function draw_item(chartIndex) {
         plotOptions: {
             series: {
                 pointStart: 0,
-                pointInterval: 45,
+                pointInterval: 60,
                 lineWidth: 3,
                 marker: {
                     symbol: 'circle'
@@ -109,7 +110,7 @@ function draw_item(chartIndex) {
                 y: 0
             }, {
                 x: 0,
-                y: 120
+                y: phases[0].voltage
             }],
             pointPlacement: 'on'
         }, {
@@ -117,11 +118,11 @@ function draw_item(chartIndex) {
             color: 'black',
             yAxis: 1,
             data: [{
-                x: 7,
+                x: phases[0].angle,
                 y: 0
             }, {
-                x: 7,
-                y: 8.5
+                x: phases[0].angle,
+                y: phases[0].current
             }],
             pointPlacement: 'on'
         }, {
@@ -134,7 +135,7 @@ function draw_item(chartIndex) {
                 y: 0
             }, {
                 x: 120,
-                y: 120
+                y: phases[1].voltage
             }],
             pointPlacement: 'on'
         }, {
@@ -142,11 +143,11 @@ function draw_item(chartIndex) {
             color: 'blue',
             yAxis: 1,
             data: [{
-                x: 105,
+                x: 120 + phases[1].angle,
                 y: 0
             }, {
-                x: 105,
-                y: 4.3
+                x: 120 + phases[1].angle,
+                y: phases[1].current
             }],
 
             pointPlacement: 'on'
@@ -160,7 +161,7 @@ function draw_item(chartIndex) {
                 y: 0
             }, {
                 x: 240,
-                y: 120
+                y: phases[2].voltage
             }],
 
             pointPlacement: 'on'
@@ -169,11 +170,11 @@ function draw_item(chartIndex) {
             color: 'red',
             yAxis: 1,
             data: [{
-                x: 255,
+                x: 240 + phases[2].angle,
                 y: 0
             }, {
-                x: 255,
-                y: 7.1
+                x: 240 + phases[2].angle,
+                y: phases[2].current
             }],
 
             pointPlacement: 'on'
@@ -226,10 +227,7 @@ function draw_item(chartIndex) {
         },
         series: [{
             name: 'Energy',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4,
-                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4,
-                49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6
-            ]
+            data: energy
 
         }]
     });
