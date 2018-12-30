@@ -36,7 +36,7 @@ function html_sidebar_items(filterListObject) {
         let filterCategory =
             `<li>
             <span class="filter-parameter">
-                ${sortIcon}${category.name}<i class="fa fa-caret-down"></i>
+                ${sortIcon}${category.name}<i class="fa fa-caret-up"></i>
             </span>
             <ul>
                 ${filterItems}

@@ -320,7 +320,19 @@ body {
 .item-status-value {
 }
 
+/************** DIALOG **********************/
 
+#energy-chart-dialog{
+    margin: auto;
+}
 
+#dialog-confirm {
+
+}
+
+.dialog-position{
+    position: relative;
+    left: 500px;
+}
 
 

@@ -89,9 +89,10 @@ function render_phase_chart(chartIndex, phases) {
                 pointStart: 0,
                 pointInterval: 60,
                 lineWidth: 3,
+                animation: true,
                 marker: {
                     symbol: 'circle'
-                }
+                },
             },
             column: {
                 pointPadding: 0,
@@ -187,7 +188,7 @@ function render_phase_chart(chartIndex, phases) {
 
 function render_energy_sparkchart(chartIndex, energy){
 
-    chart = Highcharts.chart('energy-chart-' + chartIndex, {
+    let chart = Highcharts.chart('energy-chart-' + chartIndex, {
         chart: {
             type: 'column'
         },
@@ -220,6 +221,7 @@ function render_energy_sparkchart(chartIndex, energy){
         },
         plotOptions: {
             column: {
+                animation: false,
                 pointPadding: 0,
                 borderWidth: 0
             }

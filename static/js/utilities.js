@@ -355,7 +355,8 @@ function load_menu_items(menuList) {
 }
 
 function show_energy_chart(targetID) {
-    dialog.dialog( "open" );
+    dialog.dialog("open");
+    render_energy_sparkchart("dialog", get_energy());
 }
 
 function remove_chart_items() {
@@ -389,9 +390,9 @@ function load_sidebar_items(listObject) {
 
         $('.sidebar .filter-parameter').on('click', function (event) {
             if ($(this).find('i:last-child').hasClass('fa-caret-down')) {
-                $(this).find('i:last-child').removeClass('fa-caret-down').addClass('fa-caret-right');
+                $(this).find('i:last-child').removeClass('fa-caret-down').addClass('fa-caret-up');
             } else {
-                $(this).find('i:last-child').removeClass('fa-caret-right').addClass('fa-caret-down');
+                $(this).find('i:last-child').removeClass('fa-caret-up').addClass('fa-caret-down');
             }
             $(this).parent('li').find('ul').slideToggle(200);
         });
@@ -400,9 +401,20 @@ function load_sidebar_items(listObject) {
 
 }
 
+function resize_components() {
+    dialog.dialog("option", "position", {my: "center", at: "center", of: $('#items-page')});
+    $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
+    $('#energy-chart-dialog').height(dialog.dialog("option", "height")-100);
+    $('#energy-chart-dialog').width(dialog.dialog("option", "width")-100);
+}
+
 /**************** ON READY *******************/
 
 $(function () {
+
+    $(window).resize(function () {
+        resize_components();
+    });
 
     $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
 
@@ -425,17 +437,18 @@ $(function () {
     dialog = $("#dialog-confirm").dialog({
         autoOpen: false,
         resizable: false,
-        height: "auto",
-        width: 400,
+        height: 0.8 * ($(window).height() - $('.header').height()),
+        width: 0.8 * ($(window).width() - $('.sidebar').width()),
+        position: {my: "center", at: "center", of: $('#items-page')},
         modal: true,
         buttons: {
-            "Delete all items": function () {
-                $(this).dialog("close");
-            },
-            Cancel: function () {
+            "OK": function () {
                 $(this).dialog("close");
             }
         }
     });
+
+    $('#energy-chart-dialog').height(dialog.dialog("option", "height")-150);
+    $('#energy-chart-dialog').width(dialog.dialog("option", "width")-100);
 
 });
