@@ -8,16 +8,23 @@ let username = "";
 let menuItemsAdmin = [
     "Logout",
     "Settings",
-    "Commissioning",
     "Connections",
     "Status",
+    "Monitoring",
     "Metering"
 ];
 
 let menuItemsTech = [
     "Logout",
     "Commissioning",
-    "Status"
+    "Status",
+    "Monitoring"
+];
+
+let menuItemsBilling = [
+    "Logout",
+    "Status",
+    "Metering"
 ];
 
 let filterValues = [
@@ -32,7 +39,7 @@ let filterValues = [
 let sidebarItemsMetering = {
     settings: {
         sortable: true,
-        checkbox: true
+        checkbox: false
     },
     categories: [
         {
@@ -312,15 +319,56 @@ function ajax_get_api() {
     });
 }
 
+/************* MENU & SIDEBAR **************************/
+
+function load_menu_items(menuList) {
+
+    $('#menu-list').empty().append(html_menu_items(menuList));
+
+    $('#menu-list li').on('click', function (event) {
+        $('#menu-list li').removeClass('menu-active');
+        remove_chart_items();
+        let thisTarget = event.target
+        $(thisTarget).addClass('menu-active');
+        load_dashboard_controller(thisTarget.id);
+    });
+
+    // DEFAULT MENU LOAD OPTION
+    $('#menu-list').show("slide", {direction: "right"}, 200, function () {
+        $('#menu-monitoring').addClass('menu-active');
+        load_chart_items(12);
+        load_sidebar_items(sidebarItemsMetering);
+    });
+}
+
+function load_sidebar_items(listObject) {
+
+    $('#filter-list').slideUp(200, function () {
+        $('#filter-list').empty().append(html_sidebar_items(listObject)).slideDown(200);
+
+        $('.sidebar .filter-parameter').on('click', function (event) {
+            if ($(this).find('.sidebar-icon-expand').hasClass('fa-caret-down')) {
+                $(this).find('.sidebar-icon-expand').removeClass('fa-caret-down').addClass('fa-caret-right');
+            } else {
+                $(this).find('.sidebar-icon-expand').removeClass('fa-caret-right').addClass('fa-caret-down');
+            }
+            $(this).parent('li').find('ul').slideToggle(200);
+        });
+    });
+}
+
 /**************** DISPLAY AJAX ITEMS *******************/
 
-function load_dashboard_page(menuID) {
+function load_dashboard_controller(menuID) {
     if (menuID == "menu-logout") {
         logout_success();
     } else if (menuID == "menu-metering") {
+        load_sidebar_items(sidebarItemsMetering);
+    } else if (menuID == "menu-monitoring") {
         load_chart_items(12);
         load_sidebar_items(sidebarItemsMetering);
     } else if (menuID == "menu-connections") {
+        load_network_chart();
         load_sidebar_items(sidebarItemsConnection);
     } else if (menuID == "menu-status") {
         load_sidebar_items(sidebarItemsMetering);
@@ -333,26 +381,9 @@ function load_dashboard_page(menuID) {
     }
 }
 
-function load_menu_items(menuList) {
-
-    $('#menu-list').empty().append(html_menu_items(menuList));
-
-    $('#menu-list li').on('click', function (event) {
-        $('#menu-list li').removeClass('menu-active');
-        remove_chart_items();
-        let thisTarget = event.target
-        $(thisTarget).addClass('menu-active');
-        load_dashboard_page(thisTarget.id);
-    });
 
 
-    // DEFAULT MENU LOAD OPTION
-    $('#menu-list').show("slide", {direction: "right"}, 200, function () {
-        $('#menu-metering').addClass('menu-active');
-        load_chart_items(12);
-        load_sidebar_items(sidebarItemsMetering);
-    });
-}
+/************* CHARTS **************************/
 
 function show_energy_chart(targetID) {
     dialog.dialog("open");
@@ -383,22 +414,9 @@ function load_chart_items(count) {
     });
 }
 
-function load_sidebar_items(listObject) {
-
-    $('#filter-list').slideUp(200, function () {
-        $('#filter-list').empty().append(html_sidebar_items(listObject)).slideDown(200);
-
-        $('.sidebar .filter-parameter').on('click', function (event) {
-            if ($(this).find('i:last-child').hasClass('fa-caret-down')) {
-                $(this).find('i:last-child').removeClass('fa-caret-down').addClass('fa-caret-up');
-            } else {
-                $(this).find('i:last-child').removeClass('fa-caret-up').addClass('fa-caret-down');
-            }
-            $(this).parent('li').find('ul').slideToggle(200);
-        });
-    });
-
-
+function load_network_chart(){
+    $('#items-page').width($('.dashboard').width() - $('.sidebar').width());
+    render_network_chart();
 }
 
 function resize_components() {
@@ -430,7 +448,7 @@ $(function () {
 
     $('.sidebar > ul').sortable({
         axis: 'y',
-        handle: 'i:first-child',
+        handle: '.sidebar-icon-sort',
         placeholder: 'sort-placeholder'
     });
 

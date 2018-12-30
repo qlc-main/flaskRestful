@@ -27,7 +27,7 @@ function html_sidebar_items(filterListObject) {
             filterItems += `</li>`;
         });
 
-        let sortIcon = filterListObject.settings.sortable ? `<i class="fa fa-arrows-v"></i>` : `&nbsp&nbsp&nbsp`;
+        let sortIcon = filterListObject.settings.sortable ? `<i class="sidebar-icon-sort fa fa-arrows-v"></i>` : `&nbsp&nbsp&nbsp`;
 
         if (filterListObject.settings.sortable){
 
@@ -36,7 +36,7 @@ function html_sidebar_items(filterListObject) {
         let filterCategory =
             `<li>
             <span class="filter-parameter">
-                ${sortIcon}${category.name}<i class="fa fa-caret-up"></i>
+                <i class="sidebar-icon-expand fa fa-caret-down"></i>${category.name}${sortIcon}
             </span>
             <ul>
                 ${filterItems}

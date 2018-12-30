@@ -1,12 +1,12 @@
 let charts = [];
 
+let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+let d = new Date();
+let thisMonth = months[d.getMonth()];
+
 function render_phase_chart(chartIndex, phases) {
 
     let chart;
-
-    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    let d = new Date();
-    let thisMonth = months[d.getMonth()];
 
     chart = Highcharts.chart('power-chart-' + chartIndex, {
 
@@ -186,7 +186,7 @@ function render_phase_chart(chartIndex, phases) {
 
 }
 
-function render_energy_sparkchart(chartIndex, energy){
+function render_energy_sparkchart(chartIndex, energy) {
 
     let chart = Highcharts.chart('energy-chart-' + chartIndex, {
         chart: {
@@ -234,5 +234,155 @@ function render_energy_sparkchart(chartIndex, energy){
     });
 
     charts.push(chart);
+
+}
+
+function render_network_chart() {
+    let nodes = [{
+        id: 'qnect-1',
+        label: "This",
+        group: 'origin'
+        },
+        {
+            id: 'qlect-1',
+            label: "QLect 1",
+            group: 'QLect'
+        },
+        {
+            id: 'qlect-2',
+            label: "QLect 2",
+            group: 'QLect'
+        },
+        {
+            id: 'qloud',
+            label: "QLoud",
+            group: 'QLoud',
+        },
+        {
+            id: 'qnect-2',
+            label: "QNect 2",
+            group: 'QNect'
+        },
+        {
+            id: 'meter-1',
+            label: "Meter 1",
+            group: 'Minicloset'
+        },
+        {
+            id: 'meter-2',
+            label: "Meter 2",
+            group: 'Minicloset'
+        },
+        {
+            id: 'meter-3',
+            label: "Meter 3",
+            group: 'Minicloset'
+        }
+    ];
+    let edges = [
+        {
+            from: 'qnect-1',
+            to: 'qnect-2',
+            color: 'red',
+            label: 'PLC'
+        },
+        {
+            from: 'qnect-2',
+            to: 'qloud',
+            color: 'blue',
+        },
+        {
+            from: 'qnect-1',
+            to: 'qlect-1',
+            color: 'green',
+        },
+        {
+            from: 'qnect-1',
+            to: 'qlect-2',
+            color: 'green'
+        },
+        {
+            from: 'qlect-1',
+            to: 'meter-1',
+            color: 'green'
+        },
+        {
+            from: 'qlect-2',
+            to: 'meter-2',
+            color: 'green'
+        },
+        {
+            from: 'qlect-2',
+            to: 'meter-3',
+            color: 'green'
+        }
+
+    ]
+
+// create a network
+
+    let data = {
+        nodes: nodes,
+        edges: edges
+    };
+    let options = {
+        nodes: {
+            shape: 'dot',
+            size: 20,
+            font: {
+                size: 15,
+                color: 'black'
+            },
+            borderWidth: 2
+        },
+        edges: {
+            width: 3,
+            physics: true
+        },
+        groups: {
+            origin: {
+                color: {
+                    border: 'black',
+                    background: 'blue'
+                },
+                shape: 'star',
+                size: 35
+            },
+            Minicloset: {
+                shape: 'image',
+                image: 'https://global-uploads.webflow.com/59f65ad56a27c4000132d740/5a5d28303e2b760001e1a972_MC5C-p-500.png',
+                level: 4
+            },
+            QLect: {
+                shape: 'icon',
+                icon: {
+                    face: 'FontAwesome',
+                    code: '\uf2db',
+                    size: 50,
+                    color: 'gray',
+                    level: 3
+
+                }
+            },
+            QLoud: {
+                shape: 'icon',
+                icon: {
+                    face: 'FontAwesome',
+                    code: '\uf0c2',
+                    size: 50,
+                    color: 'lightblue',
+                    level: 1
+                }
+            },
+            QNect: {
+                shape: 'image',
+                image: 'https://www.embeddedarm.com/images/boards/medium/ts-7553-v2-e2.gif',
+                level: 2
+            }
+        }
+    };
+
+    let container = document.getElementById('items-page');
+    let network = new vis.Network(container, data, options);
 
 }
