@@ -5,6 +5,7 @@
     <title>QNect Config Page</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -17,12 +18,13 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="/static/js/charting.js"></script>
+    <script src="/static/js/templates.js"></script>
     <script src="/static/js/utilities.js"></script>
 </head>
 <body>
 <div class="header">
     <img class="logo" src="/static/img/logo.png">
-    <ul class="menu">
+    <ul id="menu-list">
         <li id="menu-logout">Logout</li>
         <li id="menu-commissioning">Commissioning</li>
         <li id="menu-configuration">Configuration</li>
@@ -49,44 +51,20 @@
 <div class="dashboard">
     <div class="sidebar">
         <div class="search">
-            <input type="text" placeholder="Search.." name="search">
+            <input id="search-input" type="text" placeholder="Search.." name="search">
             <button type="submit"><i class="fa fa-search"></i></button>
         </div>
-        <ul>
-            <li>Meter Name</li>
-            <ul>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Bravo-2P</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Minicloset</li>
-            </ul>
-            <li>Meter Points</li>
-            <ul>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> 1</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> 2</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> 3</li>
-            </ul>
-            <li>Phases</li>
-            <ul>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> A</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> B</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> C</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Total</li>
-            </ul>
-            <li>Parameters</li>
-            <ul>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Voltage</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Current</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Active</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Reactive</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Apparent</li>
-                <li><input type="checkbox" name="vehicle1" value="Bike"> Power Factor</li>
-            </ul>
+        <ul id="filter-list">
+
         </ul>
     </div>
-    <div class="items-page">
+    <div id="items-page">
 
     </div>
 </div>
-
+<div id="dialog-confirm" title="Empty the recycle bin?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Configure Stuff</p>
+</div>
 
 </body>
 </html>

@@ -1,5 +1,177 @@
-var jwtToken = "";
+let jwtToken = "";
+let dialog;
 
+let username = "";
+
+/******** WILL BE REPLACED BY ACTUAL DATA FROM SERVER *****/
+
+let menuItemsAdmin = [
+    "Logout",
+    "Settings",
+    "Commissioning",
+    "Connections",
+    "Status",
+    "Metering"
+];
+
+let menuItemsTech = [
+    "Logout",
+    "Commissioning",
+    "Status"
+];
+
+let filterValues = [
+    "Alfred's Apartment",
+    "Bruce's Apartment",
+    "Gordon's Apartment",
+    "Energy",
+    "Reactive Energy",
+    "Active Energy"
+];
+
+let sidebarItemsMetering = {
+    settings: {
+        sortable: true,
+        checkbox: true
+    },
+    categories: [
+        {
+            name: 'Device Name',
+            items: [
+                {name: 'Bravo-2P'},
+                {name: 'Minicloset-5'},
+                {name: 'QLic-E'}
+            ]
+        },
+        {
+            name: 'Device Type',
+            items: [
+                {name: 'Elec. Submeter'},
+                {name: 'Energy Monitor'}
+            ]
+        },
+        {
+            name: 'Point Label',
+            items: [
+                {name: 'Apt-1'},
+                {name: 'Apt-2'},
+                {name: 'Apt-3'}
+            ]
+        }
+    ]
+};
+
+let sidebarItemsConnection = {
+    settings: {
+        sortable: false
+    },
+    categories: [
+        {
+            name: 'Ethernet',
+            items: [
+                {name: 'QLoud API'},
+                {name: 'MODBUS IP'},
+                {name: 'BACNet IP'}
+            ]
+        },
+        {
+            name: 'PLC',
+            items: [
+                {name: 'G3'},
+                {name: 'Broadband'}
+            ]
+        },
+        {
+            name: 'Wireless',
+            items: [
+                {name: 'Digi Radio'},
+                {name: 'LoRa'}
+            ]
+        },
+        {
+            name: 'Pulse In',
+            items: [
+                {name: 'Contact'}
+            ]
+        },
+        {
+            name: 'RS-485',
+            items: [
+                {name: 'MODBUS RTU'},
+                {name: 'DLSM/COSEM'}
+            ]
+        }
+    ]
+};
+
+let sidebarItemsCommissioning = {
+    settings: {
+        sortable: false
+    },
+    categories: [
+        {
+            name: 'Steps',
+            items: [
+                {name: 'Step 1'},
+                {name: 'Step 2'},
+                {name: 'Step 3'}
+            ]
+        },
+        {
+            name: 'CT',
+            items: [
+                {name: 'CT-1'},
+                {name: 'CT-2'},
+                {name: 'CT-3'}
+            ]
+        }
+    ]
+};
+
+let sidebarItemsSettings = {
+    settings: {
+        sortable: false
+    },
+    categories: [
+        {
+            name: 'Network',
+            items: [
+                {name: 'IP Address'},
+                {name: 'Remote Server'},
+                {name: 'Local Server'}
+            ]
+        },
+        {
+            name: 'Connections',
+            items: [
+                {name: 'Ethernet'},
+                {name: 'WiFi'},
+                {name: 'Bluetooth'},
+                {name: 'RS-485'},
+                {name: 'PLC'},
+                {name: 'Pulse'},
+                {name: 'MBus'}
+            ]
+        },
+        {
+            name: 'Users',
+            items: [
+                {name: 'Create New'},
+                {name: 'Edit Existing'}
+            ]
+        },
+        {
+            name: 'Storage',
+            items: [
+                {name: 'Database'}
+            ]
+        }
+    ]
+};
+
+let sidebarItemsOther = {
+    categories: []
+};
 
 function get_power() {
 
@@ -62,47 +234,52 @@ function get_energy() {
 
     let values = [];
     for (let i = 0; i < day_in_month; i++) {
-        let value = i < day ? 1 * (Math.random() * 10 + 0.1).toFixed(2) : 0;
+        let value = i < day ? 1 * (Math.random() * 10 + 5).toFixed(2) : 0;
         values.push(value);
     }
     return values;
 }
 
+/**************** LOGIN *******************/
+
 function login_success(data) {
     jwtToken = data.access_token;
-    $('.menu').show("slide", {direction: "right"}, 200, function () {
-        $('#menu-dashboard').addClass('menu-active');
-    });
+    $('.login-form input').val("");
+    $('.login-message').hide();
     $('.login-page').hide("clip", {direction: "horizontal"}, 200, function () {
         $('.dashboard').show("clip", {direction: "horizontal"}, 200, function () {
-
-            insert_item(12);
+            if (username == "admin") {
+                load_menu_items(menuItemsAdmin);
+            } else if (username == "tech") {
+                load_menu_items(menuItemsTech);
+            }
         });
 
     });
 }
 
 function login_fail(data) {
+    $('.login-form input').val("");
     $('.login-message').text("Invalid Credentials").show();
 }
 
 function logout_success() {
     if (jwtToken) {
         jwtToken = "";
-        $('.menu').hide("slide", {direction: "right"}, 200);
+        $('#menu-list').hide("slide", {direction: "right"}, 200);
         $('.dashboard').hide("clip", {direction: "horizontal"}, 200, function () {
-            destroy_charts();
             $('.login-page').show("clip", {direction: "horizontal"}, 200);
         });
     }
 }
 
+/**************** AJAX *******************/
+
 function ajax_auth_api() {
     let input = $('.login-form input')
     let user = input.val()
     let pass = input.next().val()
-    input.val("");
-    $('.login-message').hide();
+    username = user;
     $.ajax({
         type: "POST",
         dataType: "json",
@@ -135,52 +312,130 @@ function ajax_get_api() {
     });
 }
 
-function destroy_charts() {
+/**************** DISPLAY AJAX ITEMS *******************/
+
+function load_dashboard_page(menuID) {
+    if (menuID == "menu-logout") {
+        logout_success();
+    } else if (menuID == "menu-metering") {
+        load_chart_items(12);
+        load_sidebar_items(sidebarItemsMetering);
+    } else if (menuID == "menu-connections") {
+        load_sidebar_items(sidebarItemsConnection);
+    } else if (menuID == "menu-status") {
+        load_sidebar_items(sidebarItemsMetering);
+    } else if (menuID == "menu-commissioning") {
+        load_sidebar_items(sidebarItemsCommissioning);
+    } else if (menuID == "menu-settings") {
+        load_sidebar_items(sidebarItemsSettings);
+    } else {
+        load_sidebar_items(sidebarItemsOther);
+    }
+}
+
+function load_menu_items(menuList) {
+
+    $('#menu-list').empty().append(html_menu_items(menuList));
+
+    $('#menu-list li').on('click', function (event) {
+        $('#menu-list li').removeClass('menu-active');
+        remove_chart_items();
+        let thisTarget = event.target
+        $(thisTarget).addClass('menu-active');
+        load_dashboard_page(thisTarget.id);
+    });
+
+
+    // DEFAULT MENU LOAD OPTION
+    $('#menu-list').show("slide", {direction: "right"}, 200, function () {
+        $('#menu-metering').addClass('menu-active');
+        load_chart_items(12);
+        load_sidebar_items(sidebarItemsMetering);
+    });
+}
+
+function show_energy_chart(targetID) {
+    dialog.dialog( "open" );
+}
+
+function remove_chart_items() {
+
     while (charts.length) {
         charts[charts.length - 1].destroy();
         charts.pop();
     }
-    $('.items-page').empty();
+    $('#items-page').empty();
 }
 
-function insert_item(count) {
+function load_chart_items(count) {
+
+    remove_chart_items();
+
     for (let i = 1; i <= count; i++) {
-        $('.items-page').append(`<div class="item">
-<div class="item-power-chart" id="power-chart-${i}"></div>
-<div class="item-energy-chart" id="energy-chart-${i}"></div>
-<div class="item-title">Meter ${i} - Apartment B</div>
-</div>`);
-        draw_item(i, get_power(), get_energy());
+        $('#items-page').append(html_chart_item(i, "Apt-" + i));
+        render_phase_chart(i, get_power());
+        render_energy_sparkchart(i, get_energy());
     }
+
+    $('.item-title').on('click', function (event) {
+        show_energy_chart(event.target.id);
+    });
 }
 
+function load_sidebar_items(listObject) {
+
+    $('#filter-list').slideUp(200, function () {
+        $('#filter-list').empty().append(html_sidebar_items(listObject)).slideDown(200);
+
+        $('.sidebar .filter-parameter').on('click', function (event) {
+            if ($(this).find('i:last-child').hasClass('fa-caret-down')) {
+                $(this).find('i:last-child').removeClass('fa-caret-down').addClass('fa-caret-right');
+            } else {
+                $(this).find('i:last-child').removeClass('fa-caret-right').addClass('fa-caret-down');
+            }
+            $(this).parent('li').find('ul').slideToggle(200);
+        });
+    });
+
+
+}
+
+/**************** ON READY *******************/
 
 $(function () {
 
-    $('.dashboard, .sidebar, .items-page').height($(window).height() - $('.header').height());
+    $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
 
     $('.login-page button').on('click', function (event) {
         event.preventDefault();
         ajax_auth_api();
     });
 
-    $('.menu li').on('click', function (event) {
-        $('.menu li').removeClass('menu-active');
-        let thisTarget = event.target
-        if (thisTarget.id == "menu-logout") {
-            logout_success();
-        } else {
-            $(thisTarget).addClass('menu-active');
-            destroy_charts();
-            if (thisTarget.id == "menu-dashboard") {
-                insert_item(12);
-            }
-            //ajax_get_api();
-        }
+
+    $('#search-input').autocomplete({
+        source: filterValues
     });
 
-    $('.sidebar').sortable({
-        items: "li"
+    $('.sidebar > ul').sortable({
+        axis: 'y',
+        handle: 'i:first-child',
+        placeholder: 'sort-placeholder'
+    });
+
+    dialog = $("#dialog-confirm").dialog({
+        autoOpen: false,
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Delete all items": function () {
+                $(this).dialog("close");
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        }
     });
 
 });

@@ -1,6 +1,6 @@
 let charts = [];
 
-function draw_item(chartIndex, phases, energy) {
+function render_phase_chart(chartIndex, phases) {
 
     let chart;
 
@@ -183,14 +183,13 @@ function draw_item(chartIndex, phases, energy) {
 
     charts.push(chart);
 
+}
+
+function render_energy_sparkchart(chartIndex, energy){
+
     chart = Highcharts.chart('energy-chart-' + chartIndex, {
         chart: {
-            type: 'column',
-            events: {
-                click: function (event) {
-                    alert();
-                }
-            }
+            type: 'column'
         },
         skipClone: true,
         legend: {

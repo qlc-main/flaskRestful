@@ -7,6 +7,27 @@
     color: white;
 }
 
+body {
+    background: #282828; /* fallback for old browsers */
+    background: -webkit-linear-gradient(left, #601028, #8F1028);
+    background: -moz-linear-gradient(left, #601028, #8F1028);
+    background: -o-linear-gradient(left, #601028, #8F1028);
+    background: linear-gradient(to right, #601028, #8F1028);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    margin: 0;
+}
+
+/************* HEADER ***************/
+
 .header {
     background-color: #000000;
     padding: 0;
@@ -23,7 +44,9 @@
     padding: 5px;
 }
 
-.menu {
+/*************** MENU ITEMS **********/
+
+#menu-list {
     display: none;
     position: absolute;
     top: 0px;
@@ -39,7 +62,7 @@
 
 }
 
-.menu li {
+#menu-list li {
     float: right;
     transition: 0.3s;
     height: 60px;
@@ -51,18 +74,21 @@
     font-size: 18px;
 }
 
-.menu li:hover:not(.menu-active) {
+#menu-list li:hover {
     cursor: pointer;
+}
+
+#menu-list li:hover:not(.menu-active) {
     background-color: #808080;
 }
 
-.menu .menu-active {
+#menu-list .menu-active {
     background-color: white;
     color: black;
     border-radius: 5px 5px 0px 0px;
 }
 
-.menu li span {
+#menu-list li span {
     display: block;
     color: white;
     text-align: center;
@@ -74,12 +100,8 @@
 }
 
 
-.dashboard {
-    display: none;
-    margin: 0;
-    background-color: white;
-}
 
+/********* LOGIN **************/
 
 .title {
     color: white;
@@ -144,12 +166,9 @@
     font-size: 16px;
 }
 
-.form .register-form {
-    display: none;
-}
 
 
-/***********************/
+/********* SIDEBAR **************/
 
 
 .sidebar {
@@ -165,9 +184,9 @@
 }
 
 .sidebar .search {
-    margin: 25px 0px 15px 0px;
-    padding-left: 15px;
-    height: 30px;
+    padding: 15px 0px 15px 15px;
+    height: 35px;
+    border-bottom: 1px solid #555555;
 }
 
 .sidebar .search input[type=text] {
@@ -195,35 +214,75 @@
 
 
 .sidebar ul {
-    padding: 0px 15px;
+    padding: 0px;
+    margin: 0;
 }
+
 
 .sidebar ul li {
     padding: 6px 0px 6px 0px;
     text-decoration: none;
     font-size: 20px;
     color: #CCCCCC;
+    background-color: #333333;
+    vertical-align: middle;
     display: block;
 }
 
-.sidebar ul li:hover {
+.sidebar > ul > li {
+    border-bottom: 1px solid #555555;
+    padding: 0px;
+}
+
+.sidebar > ul > li:hover {
     background-color: #666666;
+    cursor: pointer;
+}
+
+.sidebar .filter-parameter {
+    padding: 10px 0px 10px 0px;
+    display: block;
+}
+
+.sort-placeholder {
+    border: 2px dashed gray;
+    border-radius: 5px;
+    height: 30px;
+}
+
+.sidebar li i:first-child {
+    padding: 0px 5px 0px 10px;
+}
+
+.sidebar li i:last-child {
+    float: right;
+    padding-right: 14px;
 }
 
 .sidebar ul ul li {
-    font-size: 16px;
+    padding-left: 35px;
+    font-size: 14px;
     color: #FFFFFF;
-    display: block;
+    background-color: #404040;
 }
 
-.sidebar ul ul li:hover {
-    background-color: #666666;
+.sidebar ul ul li input[type="checkbox"] {
+    float: right;
+    margin-right: 50px;
+}
+
+/********** WORKING PAGE ***********/
+
+.dashboard {
+    display: none;
+    margin: 0;
+    background-color: white;
 }
 
 
-/**********************/
+/********** CHART ITEMS ************/
 
-.items-page {
+#items-page {
     display: inline-flex;
     flex-wrap: wrap;
     position: absolute;
@@ -253,19 +312,15 @@
     font-weight: bold;
 }
 
+.item-title:hover {
+    cursor: pointer;
+    color: #888888;
+}
+
 .item-status-value {
 }
 
 
-body {
-    background: #282828; /* fallback for old browsers */
-    background: -webkit-linear-gradient(left, #601028, #8F1028);
-    background: -moz-linear-gradient(left, #601028, #8F1028);
-    background: -o-linear-gradient(left, #601028, #8F1028);
-    background: linear-gradient(to right, #601028, #8F1028);
-    font-family: "Roboto", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    margin: 0;
-}
+
+
+
