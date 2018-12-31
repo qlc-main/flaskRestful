@@ -238,130 +238,114 @@ function render_energy_sparkchart(chartIndex, energy) {
 }
 
 function render_network_chart() {
-    let nodes = [{
-        id: 'qnect-0',
-        label: "This",
-        group: 'origin'
-        },
+
+    // create an array with nodes
+    let nodes = new vis.DataSet([{
+        id: 1,
+        label: 'QLoud',
+        group: 'QLoud'
+    },
         {
-            id: 'qnect-1',
-            label: "QNect 1",
+            id: 2,
+            label: 'QNect1',
             group: 'QNect'
         },
         {
-            id: 'qnect-2',
-            label: "QNect 2",
+            id: 3,
+            label: 'QNect2',
             group: 'QNect'
         },
         {
-            id: 'qloud',
-            label: "QLoud",
-            group: 'QLoud',
-        },
-        {
-            id: 'qnect-3',
-            label: "QNect 3",
-            group: 'QNect'
-        },
-        {
-            id: 'meter-1',
-            label: "Meter 1",
+            id: 4,
+            label: 'Meter1',
             group: 'Minicloset'
         },
         {
-            id: 'meter-2',
-            label: "Meter 2",
+            id: 5,
+            label: 'Meter2',
             group: 'Minicloset'
         },
         {
-            id: 'meter-3',
-            label: "Meter 3",
+            id: 'qn3',
+            label: 'QNect3',
+            group: 'QNect'
+        },
+        {
+            id: 'm3',
+            label: 'Meter3',
+            group: 'Minicloset'
+        },
+        {
+            id: 'm4',
+            label: 'Meter4',
+            group: 'Minicloset'
+        },
+        {
+            id: 'm5',
+            label: 'Meter5',
             group: 'Minicloset'
         }
-    ];
-    let edges = [
+
+    ]);
+
+    let edges = new vis.DataSet([{
+        from: 1,
+        to: 2
+    },
         {
-            from: 'qnect-0',
-            to: 'qnect-1',
-            color: 'red',
-            label: 'PLC'
+            from: 2,
+            to: 3
         },
         {
-            from: 'qnect-2',
-            to: 'qloud',
-            color: 'blue'
+            from: 3,
+            to: 4
         },
         {
-            from: 'qnect-0',
-            to: 'qnect-2',
-            color: 'orange',
-            dashes: true
+            from: 3,
+            to: 5
         },
         {
-            from: 'qnect-0',
-            to: 'qnect-3',
-            color: 'blue'
+            from: 3,
+            to: 'qn3'
         },
         {
-            from: 'qnect-3',
-            to: 'meter-1',
-            color: 'green'
+            from: 'qn3',
+            to: 'm3'
         },
         {
-            from: 'qnect-2',
-            to: 'meter-2',
-            color: 'green'
+            from: 'qn3',
+            to: 'm4'
         },
         {
-            from: 'qnect-2',
-            to: 'meter-3',
-            color: 'green'
+            from: 'qn3',
+            to: 'm5'
         }
-
-    ]
-
-// create a network
+    ]);
 
     let data = {
         nodes: nodes,
         edges: edges
     };
     let options = {
-        nodes: {
-            shape: 'dot',
-            size: 20,
-            font: {
-                size: 15,
-                color: 'black'
-            },
-            borderWidth: 2
-        },
-        edges: {
-            width: 3,
-            physics: true
+        layout: {
+            hierarchical: {
+                enabled: true,
+                direction: 'UD',
+                sortMethod: 'directed'
+            }
         },
         groups: {
-            origin: {
-                color: {
-                    border: 'black',
-                    background: 'blue'
-                },
-                shape: 'star',
-                size: 35
-            },
             Minicloset: {
                 shape: 'image',
-                image: 'https://global-uploads.webflow.com/59f65ad56a27c4000132d740/5a5d28303e2b760001e1a972_MC5C-p-500.png',
-                level: 4
+                image: 'https://global-uploads.webflow.com/59f65ad56a27c4000132d740/5a5d28303e2b760001e1a972_MC5C-p-500.png'
             },
             QLect: {
                 shape: 'icon',
                 icon: {
                     face: 'FontAwesome',
-                    code: '\uf2db',
+                    code: '\uf0e4',
                     size: 50,
-                    color: 'gray',
-                    level: 3
+                    color: 'white'
 
                 }
             },
@@ -371,17 +355,16 @@ function render_network_chart() {
                     face: 'FontAwesome',
                     code: '\uf0c2',
                     size: 50,
-                    color: 'lightblue',
-                    level: 1
+                    color: 'lightblue'
                 }
             },
             QNect: {
                 shape: 'image',
-                image: 'https://www.embeddedarm.com/images/boards/medium/ts-7553-v2-e2.gif',
-                level: 2
+                image: 'https://www.embeddedarm.com/images/boards/medium/ts-7553-v2-e2.gif'
             }
         }
     };
+
 
     let container = document.getElementById('items-page');
     let network = new vis.Network(container, data, options);
