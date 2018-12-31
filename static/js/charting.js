@@ -241,33 +241,29 @@ function render_network_chart() {
 
     // create an array with nodes
     let nodes = new vis.DataSet([{
-        id: 1,
-        label: 'QLoud',
+        id: 'q0',
         group: 'QLoud'
     },
         {
-            id: 2,
-            label: 'QNect1',
+            id: 'qn1',
             group: 'QNect'
         },
         {
-            id: 3,
-            label: 'QNect2',
-            group: 'QNect'
+            id: 'qn2',
+            group: 'origin'
         },
         {
-            id: 4,
+            id: 'm1',
             label: 'Meter1',
             group: 'Minicloset'
         },
         {
-            id: 5,
+            id: 'm2',
             label: 'Meter2',
             group: 'Minicloset'
         },
         {
             id: 'qn3',
-            label: 'QNect3',
             group: 'QNect'
         },
         {
@@ -289,24 +285,31 @@ function render_network_chart() {
     ]);
 
     let edges = new vis.DataSet([{
-        from: 1,
-        to: 2
+        from: 'q0',
+        to: 'qn1'
     },
         {
-            from: 2,
-            to: 3
+            from: 'qn1',
+            to: 'qn2',
+            label: 'Digi',
+            font: {color: 'blue'},
+            dashes: [2, 2]
         },
         {
-            from: 3,
-            to: 4
+            from: 'qn2',
+            to: 'm1'
         },
         {
-            from: 3,
-            to: 5
+            from: 'qn2',
+            to: 'm2'
         },
         {
-            from: 3,
-            to: 'qn3'
+            from: 'qn2',
+            to: 'qn3',
+            label: 'PLC',
+            font: {color: 'red'},
+            color: 'red',
+            dashes: [8, 2, 2, 2]
         },
         {
             from: 'qn3',
@@ -334,6 +337,7 @@ function render_network_chart() {
                 sortMethod: 'directed'
             }
         },
+        physics: false,
         groups: {
             Minicloset: {
                 shape: 'image',
@@ -346,7 +350,6 @@ function render_network_chart() {
                     code: '\uf0e4',
                     size: 50,
                     color: 'white'
-
                 }
             },
             QLoud: {
@@ -354,9 +357,14 @@ function render_network_chart() {
                 icon: {
                     face: 'FontAwesome',
                     code: '\uf0c2',
-                    size: 50,
+                    size: 75,
                     color: 'lightblue'
                 }
+            },
+            origin: {
+                shape: 'circle',
+                size: 75,
+                label: 'This Device'
             },
             QNect: {
                 shape: 'image',
