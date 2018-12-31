@@ -8,9 +8,7 @@ let username = "";
 let menuItemsAdmin = [
     "Logout",
     "Settings",
-    "Connections",
     "Status",
-    "Monitoring",
     "Metering"
 ];
 
@@ -18,7 +16,7 @@ let menuItemsTech = [
     "Logout",
     "Commissioning",
     "Status",
-    "Monitoring"
+    "Metering"
 ];
 
 let menuItemsBilling = [
@@ -68,42 +66,31 @@ let sidebarItemsMetering = {
     ]
 };
 
-let sidebarItemsConnection = {
+let sidebarItemsStatus = {
     settings: {
         sortable: false
     },
     categories: [
         {
-            name: 'Ethernet',
+            name: 'Upstream Comm',
             items: [
                 {name: 'QLoud API'},
                 {name: 'MODBUS IP'},
                 {name: 'BACNet IP'}
-            ]
-        },
-        {
-            name: 'PLC',
+            ],
+            name: 'Planar Comm',
             items: [
-                {name: 'G3'},
-                {name: 'Broadband'}
-            ]
-        },
-        {
-            name: 'Wireless',
-            items: [
+                {name: 'G3PLC'},
+                {name: 'BPLC'},
                 {name: 'Digi Radio'},
                 {name: 'LoRa'}
             ]
         },
         {
-            name: 'Pulse In',
+            name: 'Downstream Comm',
             items: [
-                {name: 'Contact'}
-            ]
-        },
-        {
-            name: 'RS-485',
-            items: [
+                {name: 'Pulse In'},
+                {name: 'MBus'},
                 {name: 'MODBUS RTU'},
                 {name: 'DLSM/COSEM'}
             ]
@@ -226,9 +213,9 @@ function get_power() {
             active: total_active,
             reactive: total_reactive
         }
-    }
+    };
 
-    phases.push(total)
+    phases.push(total);
 
     return phases;
 
@@ -283,9 +270,9 @@ function logout_success() {
 /**************** AJAX *******************/
 
 function ajax_auth_api() {
-    let input = $('.login-form input')
-    let user = input.val()
-    let pass = input.next().val()
+    let input = $('.login-form input');
+    let user = input.val();
+    let pass = input.next().val();
     username = user;
     $.ajax({
         type: "POST",
@@ -303,9 +290,9 @@ function alert_json(data) {
 }
 
 function ajax_get_api() {
-    let input = $('.login-form input')
-    let user = input.val()
-    let pass = input.next().val()
+    let input = $('.login-form input');
+    let user = input.val();
+    let pass = input.next().val();
     input.val("");
     $('.login-message').hide();
     $.ajax({
@@ -328,7 +315,7 @@ function load_menu_items(menuList) {
     $('#menu-list li').on('click', function (event) {
         $('#menu-list li').removeClass('menu-active');
         remove_chart_items();
-        let thisTarget = event.target
+        let thisTarget = event.target;
         $(thisTarget).addClass('menu-active');
         load_dashboard_controller(thisTarget.id);
     });
@@ -367,11 +354,9 @@ function load_dashboard_controller(menuID) {
     } else if (menuID == "menu-monitoring") {
         load_chart_items(12);
         load_sidebar_items(sidebarItemsMetering);
-    } else if (menuID == "menu-connections") {
-        load_network_chart();
-        load_sidebar_items(sidebarItemsConnection);
     } else if (menuID == "menu-status") {
-        load_sidebar_items(sidebarItemsMetering);
+        load_network_chart();
+        load_sidebar_items(sidebarItemsStatus);
     } else if (menuID == "menu-commissioning") {
         load_sidebar_items(sidebarItemsCommissioning);
     } else if (menuID == "menu-settings") {
@@ -380,7 +365,6 @@ function load_dashboard_controller(menuID) {
         load_sidebar_items(sidebarItemsOther);
     }
 }
-
 
 
 /************* CHARTS **************************/
@@ -414,7 +398,7 @@ function load_chart_items(count) {
     });
 }
 
-function load_network_chart(){
+function load_network_chart() {
     $('#items-page').width($('.dashboard').width() - $('.sidebar').width());
     render_network_chart();
 }
@@ -422,8 +406,8 @@ function load_network_chart(){
 function resize_components() {
     dialog.dialog("option", "position", {my: "center", at: "center", of: $('#items-page')});
     $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
-    $('#energy-chart-dialog').height(dialog.dialog("option", "height")-100);
-    $('#energy-chart-dialog').width(dialog.dialog("option", "width")-100);
+    $('#energy-chart-dialog').height(dialog.dialog("option", "height") - 100);
+    $('#energy-chart-dialog').width(dialog.dialog("option", "width") - 100);
 }
 
 /**************** ON READY *******************/
@@ -466,7 +450,7 @@ $(function () {
         }
     });
 
-    $('#energy-chart-dialog').height(dialog.dialog("option", "height")-150);
-    $('#energy-chart-dialog').width(dialog.dialog("option", "width")-100);
+    $('#energy-chart-dialog').height(dialog.dialog("option", "height") - 150);
+    $('#energy-chart-dialog').width(dialog.dialog("option", "width") - 100);
 
 });
