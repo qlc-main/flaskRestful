@@ -9,14 +9,14 @@ let menuItemsAdmin = [
     "Logout",
     "Settings",
     "Status",
-    "Metering"
+    "Monitoring"
 ];
 
 let menuItemsTech = [
     "Logout",
     "Commissioning",
     "Status",
-    "Metering"
+    "Monitoring"
 ];
 
 let menuItemsBilling = [
@@ -72,13 +72,15 @@ let sidebarItemsStatus = {
     },
     categories: [
         {
-            name: 'Upstream Comm',
+            name: 'Upstream',
             items: [
                 {name: 'QLoud API'},
                 {name: 'MODBUS IP'},
                 {name: 'BACNet IP'}
-            ],
-            name: 'Planar Comm',
+            ]
+        },
+        {
+            name: 'Planar',
             items: [
                 {name: 'G3PLC'},
                 {name: 'BPLC'},
@@ -87,12 +89,19 @@ let sidebarItemsStatus = {
             ]
         },
         {
-            name: 'Downstream Comm',
+            name: 'Downstream',
             items: [
                 {name: 'Pulse In'},
                 {name: 'MBus'},
                 {name: 'MODBUS RTU'},
                 {name: 'DLSM/COSEM'}
+            ]
+        },
+        {
+            name: 'Device Type',
+            items: [
+                {name: 'QNect'},
+                {name: 'Meters'}
             ]
         }
     ]

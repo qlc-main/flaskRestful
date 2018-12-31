@@ -239,19 +239,19 @@ function render_energy_sparkchart(chartIndex, energy) {
 
 function render_network_chart() {
     let nodes = [{
-        id: 'qnect-1',
+        id: 'qnect-0',
         label: "This",
         group: 'origin'
         },
         {
-            id: 'qlect-1',
-            label: "QLect 1",
-            group: 'QLect'
+            id: 'qnect-1',
+            label: "QNect 1",
+            group: 'QNect'
         },
         {
-            id: 'qlect-2',
-            label: "QLect 2",
-            group: 'QLect'
+            id: 'qnect-2',
+            label: "QNect 2",
+            group: 'QNect'
         },
         {
             id: 'qloud',
@@ -259,8 +259,8 @@ function render_network_chart() {
             group: 'QLoud',
         },
         {
-            id: 'qnect-2',
-            label: "QNect 2",
+            id: 'qnect-3',
+            label: "QNect 3",
             group: 'QNect'
         },
         {
@@ -281,38 +281,39 @@ function render_network_chart() {
     ];
     let edges = [
         {
-            from: 'qnect-1',
-            to: 'qnect-2',
+            from: 'qnect-0',
+            to: 'qnect-1',
             color: 'red',
             label: 'PLC'
         },
         {
             from: 'qnect-2',
             to: 'qloud',
-            color: 'blue',
+            color: 'blue'
         },
         {
-            from: 'qnect-1',
-            to: 'qlect-1',
-            color: 'green',
+            from: 'qnect-0',
+            to: 'qnect-2',
+            color: 'orange',
+            dashes: true
         },
         {
-            from: 'qnect-1',
-            to: 'qlect-2',
-            color: 'green'
+            from: 'qnect-0',
+            to: 'qnect-3',
+            color: 'blue'
         },
         {
-            from: 'qlect-1',
+            from: 'qnect-3',
             to: 'meter-1',
             color: 'green'
         },
         {
-            from: 'qlect-2',
+            from: 'qnect-2',
             to: 'meter-2',
             color: 'green'
         },
         {
-            from: 'qlect-2',
+            from: 'qnect-2',
             to: 'meter-3',
             color: 'green'
         }
