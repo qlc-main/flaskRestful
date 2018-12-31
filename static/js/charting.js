@@ -186,9 +186,9 @@ function render_phase_chart(chartIndex, phases) {
 
 }
 
-function render_energy_sparkchart(chartIndex, energy) {
+function render_harmonic_sparkchart(chartIndex, harmonics) {
 
-    let chart = Highcharts.chart('energy-chart-' + chartIndex, {
+    let chart = Highcharts.chart('harmonic-chart-' + chartIndex, {
         chart: {
             type: 'column'
         },
@@ -211,24 +211,28 @@ function render_energy_sparkchart(chartIndex, energy) {
             visible: false
         },
         yAxis: {
-            min: 0,
             visible: false
         },
         tooltip: {
             formatter: function () {
-                return thisMonth + " " + (parseInt(this.x) + 1) + ": " + this.y + "kWh";
+                return "Harmonic-" + (parseInt(this.x) + 1) + ": " + this.y;
             }
         },
         plotOptions: {
             column: {
                 animation: false,
                 pointPadding: 0,
-                borderWidth: 0
+                borderWidth: 0,
+                stacking: 'normal'
             }
         },
         series: [{
-            name: 'Energy',
-            data: energy
+            name: 'Voltage',
+            data: harmonics
+
+        },{
+            name: 'Current',
+            data: harmonics.map(x => x*-1)
 
         }]
     });

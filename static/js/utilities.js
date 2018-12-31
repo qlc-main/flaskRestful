@@ -9,14 +9,15 @@ let menuItemsAdmin = [
     "Logout",
     "Settings",
     "Status",
-    "Monitoring"
+    "Phase Diagnostics",
+    "Metering"
 ];
 
 let menuItemsTech = [
     "Logout",
     "Commissioning",
     "Status",
-    "Monitoring"
+    "Phase Diagnostics"
 ];
 
 let menuItemsBilling = [
@@ -331,7 +332,7 @@ function load_menu_items(menuList) {
 
     // DEFAULT MENU LOAD OPTION
     $('#menu-list').show("slide", {direction: "right"}, 200, function () {
-        $('#menu-monitoring').addClass('menu-active');
+        $('#menu-phase-diagnostics').addClass('menu-active');
         load_chart_items(12);
         load_sidebar_items(sidebarItemsMetering);
     });
@@ -360,7 +361,7 @@ function load_dashboard_controller(menuID) {
         logout_success();
     } else if (menuID == "menu-metering") {
         load_sidebar_items(sidebarItemsMetering);
-    } else if (menuID == "menu-monitoring") {
+    } else if (menuID == "menu-phase-diagnostics") {
         load_chart_items(12);
         load_sidebar_items(sidebarItemsMetering);
     } else if (menuID == "menu-status") {
@@ -399,7 +400,7 @@ function load_chart_items(count) {
     for (let i = 1; i <= count; i++) {
         $('#items-page').append(html_chart_item(i, "Apt-" + i));
         render_phase_chart(i, get_power());
-        render_energy_sparkchart(i, get_energy());
+        render_harmonic_sparkchart(i, get_energy());
     }
 
     $('.item-title').on('click', function (event) {
@@ -411,6 +412,8 @@ function load_network_chart() {
     $('#items-page').width($('.dashboard').width() - $('.sidebar').width());
     render_network_chart();
 }
+
+/**************** WINDOW EVENTS *******************/
 
 function resize_components() {
     dialog.dialog("option", "position", {my: "center", at: "center", of: $('#items-page')});
