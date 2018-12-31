@@ -364,7 +364,7 @@ function render_network_chart() {
             origin: {
                 shape: 'circle',
                 size: 75,
-                label: 'This Device'
+                label: 'This'
             },
             QNect: {
                 shape: 'image',
