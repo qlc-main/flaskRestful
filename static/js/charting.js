@@ -215,7 +215,7 @@ function render_harmonic_sparkchart(chartIndex, harmonics) {
         },
         tooltip: {
             formatter: function () {
-                return "Harmonic-" + (parseInt(this.x) + 1) + ": " + this.y;
+                return ((this.y > 0) ? "Voltage-" : "Current-") + "HD-" + (parseInt(this.x) + 1) + ": " + Math.abs(this.y);
             }
         },
         plotOptions: {

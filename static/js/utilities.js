@@ -7,7 +7,9 @@ let username = "";
 
 let menuItemsAdmin = [
     "Logout",
+    "Admin",
     "Settings",
+    "Device Map",
     "Status",
     "Phase Diagnostics",
     "Metering"
@@ -244,6 +246,16 @@ function get_energy() {
     return values;
 }
 
+function get_harmonics() {
+
+    let values = [];
+    for (let i = 0; i < 100; i++) {
+        let value = Math.round((Math.random() * 100));
+        values.push(value);
+    }
+    return values;
+}
+
 /**************** LOGIN *******************/
 
 function login_success(data) {
@@ -365,6 +377,8 @@ function load_dashboard_controller(menuID) {
         load_chart_items(12);
         load_sidebar_items(sidebarItemsMetering);
     } else if (menuID == "menu-status") {
+        load_sidebar_items(sidebarItemsStatus);
+    } else if (menuID == "menu-device-map") {
         load_network_chart();
         load_sidebar_items(sidebarItemsStatus);
     } else if (menuID == "menu-commissioning") {
@@ -379,9 +393,9 @@ function load_dashboard_controller(menuID) {
 
 /************* CHARTS **************************/
 
-function show_energy_chart(targetID) {
+function show_harmonic_chart(targetID) {
     dialog.dialog("open");
-    render_energy_sparkchart("dialog", get_energy());
+    render_harmonic_sparkchart("dialog", get_harmonics());
 }
 
 function remove_chart_items() {
@@ -400,11 +414,11 @@ function load_chart_items(count) {
     for (let i = 1; i <= count; i++) {
         $('#items-page').append(html_chart_item(i, "Apt-" + i));
         render_phase_chart(i, get_power());
-        render_harmonic_sparkchart(i, get_energy());
+        render_harmonic_sparkchart(i, get_harmonics());
     }
 
     $('.item-title').on('click', function (event) {
-        show_energy_chart(event.target.id);
+        show_harmonic_chart(event.target.id);
     });
 }
 
