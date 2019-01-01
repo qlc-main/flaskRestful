@@ -418,7 +418,7 @@ function load_dashboard_controller(menuID) {
         load_sidebar_items(sidebarItemsMetering);
     } else if (menuID == "menu-phase-diagnostics") {
         load_chart_items(12);
-        load_sidebar_items(sidebarItemsMetering);
+        load_sidebar_items(sidebarItemsDiagnostics);
     } else if (menuID == "menu-status") {
         load_sidebar_items(sidebarItemsStatus);
     } else if (menuID == "menu-device-map") {
