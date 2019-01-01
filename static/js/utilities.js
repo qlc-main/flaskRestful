@@ -94,8 +94,8 @@ let sidebarItemsDiagnostics = {
         {
             name: 'Voltage',
             items: [
-                {name: 'Phase-Neutral'},
-                {name: 'Phase-Phase'},
+                {name: 'Value'},
+                {name: 'Delta'},
                 {name: 'Frequency'},
                 {name: 'Harmonics'}
             ]
@@ -103,8 +103,7 @@ let sidebarItemsDiagnostics = {
         {
             name: 'Current',
             items: [
-                {name: 'Phase-Neutral'},
-                {name: 'Phase-Phase'},
+                {name: 'Value'},
                 {name: 'Angle'},
                 {name: 'Harmonics'}
             ]
@@ -388,8 +387,8 @@ function load_menu_items(menuList) {
     // DEFAULT MENU LOAD OPTION
     $('#menu-list').show("slide", {direction: "right"}, 200, function () {
         $('#menu-phase-diagnostics').addClass('menu-active');
-        load_chart_items(12);
-        load_sidebar_items(sidebarItemsMetering);
+        load_diagnostic_items(12);
+        load_sidebar_items(sidebarItemsDiagnostics);
     });
 }
 
@@ -417,7 +416,7 @@ function load_dashboard_controller(menuID) {
     } else if (menuID == "menu-metering") {
         load_sidebar_items(sidebarItemsMetering);
     } else if (menuID == "menu-phase-diagnostics") {
-        load_chart_items(12);
+        load_diagnostic_items(12);
         load_sidebar_items(sidebarItemsDiagnostics);
     } else if (menuID == "menu-status") {
         load_sidebar_items(sidebarItemsStatus);
@@ -450,7 +449,7 @@ function remove_chart_items() {
     $('#items-page').empty();
 }
 
-function load_chart_items(count) {
+function load_diagnostic_items(count) {
 
     remove_chart_items();
 
@@ -475,8 +474,8 @@ function load_network_chart() {
 function resize_components() {
     dialog.dialog("option", "position", {my: "center", at: "center", of: $('#items-page')});
     $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
-    $('#energy-chart-dialog').height(dialog.dialog("option", "height") - 100);
-    $('#energy-chart-dialog').width(dialog.dialog("option", "width") - 100);
+    $('#harmonic-chart-dialog').height(dialog.dialog("option", "height") - 100);
+    $('#harmonic-chart-dialog').width(dialog.dialog("option", "width") - 100);
 }
 
 /**************** ON READY *******************/
@@ -519,7 +518,7 @@ $(function () {
         }
     });
 
-    $('#energy-chart-dialog').height(dialog.dialog("option", "height") - 150);
-    $('#energy-chart-dialog').width(dialog.dialog("option", "width") - 100);
+    $('#harmonic-chart-dialog').height(dialog.dialog("option", "height") - 150);
+    $('#harmonic-chart-dialog').width(dialog.dialog("option", "width") - 100);
 
 });
