@@ -31,17 +31,17 @@ function render_phase_chart(chartIndex, phases) {
                 if (this.y) {
                     let parameter = this.series.name.split(".")[0];
                     let phase = this.series.name.split(".")[1];
+                    let angle = this.x;
+                    if (phase == 'B') angle -= 120;
+                    if (phase == 'C') angle -= 240;
                     let string = "<span style='font-weight:bold;color: " + this.series.color + "'>Phase " + phase + "<br/>";
                     if (parameter == "Voltage")
-                        return string + parameter + ": " + this.y + "V @" + 60 + "Hz<br/>" +
-                            "S.Power: " + 7 + "kVA ∠" + this.x + "°";
+                        return string + parameter + ": " + this.y + "V @ " + 60 + "Hz";
                     if (parameter == "Current")
-                        return string + parameter + ": " + this.y + "A<br/>" +
-                            "R.Power: " + 2.1 + " kW";
+                        return string + parameter + ": " + this.y + "A ∠ " + angle.toFixed(2) + "°";
                 } else {
                     return "<span style='font-weight:bold'>Total</span><br/>" +
-                        "Current 23A<br/>" +
-                        "Power: 7.2kW"
+                        "Current 23A";
                 }
             }
         },
