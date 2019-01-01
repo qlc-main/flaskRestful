@@ -69,6 +69,49 @@ let sidebarItemsMetering = {
     ]
 };
 
+let sidebarItemsDiagnostics = {
+    settings: {
+        sortable: true,
+        checkbox: false
+    },
+    categories: [
+        {
+            name: 'Device Name',
+            items: [
+                {name: 'Bravo-2P'},
+                {name: 'Minicloset-5'},
+                {name: 'QLic-E'}
+            ]
+        },
+        {
+            name: 'Point Label',
+            items: [
+                {name: 'Apt-1'},
+                {name: 'Apt-2'},
+                {name: 'Apt-3'}
+            ]
+        },
+        {
+            name: 'Voltage',
+            items: [
+                {name: 'Phase-Neutral'},
+                {name: 'Phase-Phase'},
+                {name: 'Frequency'},
+                {name: 'Harmonics'}
+            ]
+        },
+        {
+            name: 'Current',
+            items: [
+                {name: 'Phase-Neutral'},
+                {name: 'Phase-Phase'},
+                {name: 'Angle'},
+                {name: 'Harmonics'}
+            ]
+        },
+    ]
+};
+
 let sidebarItemsStatus = {
     settings: {
         sortable: false
