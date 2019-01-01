@@ -6,6 +6,8 @@ from resources.user import UserRegister, User, UserLogin, TokenRefresh
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 
+from models.user import UserModel
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -17,6 +19,9 @@ api = Api(app)
 @app.before_first_request
 def create_tables():
     db.create_all()
+    UserModel('admin', 'admin').save_to_db()
+
+
 
 
 jwt = JWTManager(app)
@@ -73,6 +78,9 @@ def revoked_token_callback():
 def home():
     return render_template('index.html')
 
+@app.route('/test')
+def test():
+    return 'yo'
 
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(StoreList, '/stores')
