@@ -1,4 +1,5 @@
-let item_charts = {upper: [], lower: []};
+//let item_charts = {upper: [], lower: []};
+let item_charts = []
 
 let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 let d = new Date();
@@ -98,11 +99,11 @@ let sparkOptions = {
 
 
 function update_spark_chart(chartIndex, name, color) {
-    if (item_charts.lower[chartIndex]) {
-        item_charts.lower[chartIndex].update({
+    if (item_charts['lower-'+chartIndex]) {
+        item_charts['lower-'+chartIndex].update({
             series: [{color: color, name: name}]
         });
-        item_charts.lower[chartIndex].series[0].setData(get_random(30, 100));
+        item_charts['lower-'+chartIndex].series[0].setData(get_random(30, 100));
     }
 }
 
@@ -130,8 +131,8 @@ function render_meter_chart(chartIndex, meter) {
         }]
 
     }));
-
-    item_charts.upper.push(chart);
+     item_charts['upper-'+chartIndex] = chart
+    //item_charts.upper.push(chart);
 }
 
 function render_phase_chart(chartIndex, phases) {
@@ -331,7 +332,8 @@ function render_phase_chart(chartIndex, phases) {
         }]
     });
 
-    item_charts.upper.push(chart);
+         item_charts['upper-'+chartIndex] = chart
+    //item_charts.upper.push(chart);
 
 }
 
@@ -351,7 +353,8 @@ function render_harmonic_sparkchart(chartIndex, harmonics) {
         }]
     }));
 
-    item_charts.lower.push(chart);
+    //item_charts.lower.push(chart);
+        item_charts['lower-'+chartIndex] = chart;
 
 }
 
@@ -370,18 +373,26 @@ function render_energy_sparkchart(chartIndex, energy) {
         }]
     }));
 
-    item_charts.lower.push(chart);
+    //item_charts.lower.push(chart);
+             item_charts['lower-'+chartIndex] = chart;
 
 }
 
 function delete_item_charts() {
-    for (let key in item_charts) {
+    /*for (let key in item_charts) {
         let chart = item_charts[key];
         while (item_charts.length) {
             chart[chart.length - 1].destroy();
             chart.pop();
         }
-    }
+    }*/
+
+
+        while (item_charts.length) {
+            chart[chart.length - 1].destroy();
+            chart.pop();
+        }
+
 }
 
 function render_network_chart() {

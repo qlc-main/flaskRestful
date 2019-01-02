@@ -230,19 +230,6 @@ let sidebarItemsSettings = {
                 {name: 'Pulse'},
                 {name: 'MBus'}
             ]
-        },
-        {
-            name: 'Users',
-            items: [
-                {name: 'Create New'},
-                {name: 'Edit Existing'}
-            ]
-        },
-        {
-            name: 'Storage',
-            items: [
-                {name: 'Database'}
-            ]
         }
     ]
 };
