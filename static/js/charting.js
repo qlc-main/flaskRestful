@@ -1,14 +1,113 @@
-let charts = [];
+let item_charts = {upper: [], lower: []};
 
 let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 let d = new Date();
 let thisMonth = months[d.getMonth()];
 
+let gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BFFF'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+let sparkOptions = {
+    chart: {
+        type: 'column'
+    },
+    skipClone: true,
+    legend: {
+        enabled: false
+    },
+    exporting: {
+        enabled: false
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+        text: ''
+    },
+
+    xAxis: {
+        crosshair: false,
+        visible: false
+    },
+    yAxis: {
+        visible: false
+    },
+    plotOptions: {
+        column: {
+            animation: false,
+            pointPadding: 0,
+            borderWidth: 0
+        }
+    }
+}
+
+
+function update_spark_chart(chartIndex, name, color) {
+    if (item_charts.lower[chartIndex]) {
+        item_charts.lower[chartIndex].update({
+            series: [{color: color, name: name}]
+        });
+        item_charts.lower[chartIndex].series[0].setData(get_harmonics(20, 100));
+    }
+}
+
 function render_phase_chart(chartIndex, phases) {
 
     let chart;
 
-    chart = Highcharts.chart('power-chart-' + chartIndex, {
+    chart = Highcharts.chart('phase-chart-' + chartIndex, {
+
 
         chart: {
             polar: true
@@ -36,12 +135,12 @@ function render_phase_chart(chartIndex, phases) {
                     if (phase == 'C') angle -= 240;
                     let string = "<span style='font-weight:bold;color: " + this.series.color + "'>Phase " + phase + "<br/>";
                     if (parameter == "Voltage")
-                        return string + parameter + ": " + this.y + "V @ " + 60 + "Hz";
+                        return string + parameter + ": " + (this.y).toFixed(1) + " / " + (this.y * Math.sqrt(3)).toFixed(1) + "V";
                     if (parameter == "Current")
-                        return string + parameter + ": " + this.y + "A ∠ " + angle.toFixed(2) + "°";
+                        return string + parameter + ": " + (this.y).toFixed(2) + "A ∠ " + angle.toFixed(2) + "°";
                 } else {
-                    return "<span style='font-weight:bold'>Total</span><br/>" +
-                        "Current 23A";
+                    return "<span style='font-weight:bold'>System</span><br/>" +
+                        "Frequency: 60Hz";
                 }
             }
         },
@@ -92,11 +191,14 @@ function render_phase_chart(chartIndex, phases) {
                 animation: true,
                 marker: {
                     symbol: 'circle'
-                },
-            },
-            column: {
-                pointPadding: 0,
-                groupPadding: 0
+                }, cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function () {
+                            update_spark_chart(chartIndex, this.series.name, this.series.color);
+                        }
+                    }
+                }
             }
         },
 
@@ -108,7 +210,10 @@ function render_phase_chart(chartIndex, phases) {
             yAxis: 0,
             data: [{
                 x: 0,
-                y: 0
+                y: 0,
+                marker: {
+                    enabled: false
+                }
             }, {
                 x: 0,
                 y: phases[0].voltage
@@ -120,7 +225,10 @@ function render_phase_chart(chartIndex, phases) {
             yAxis: 1,
             data: [{
                 x: phases[0].angle,
-                y: 0
+                y: 0,
+                marker: {
+                    enabled: false
+                }
             }, {
                 x: phases[0].angle,
                 y: phases[0].current
@@ -133,7 +241,10 @@ function render_phase_chart(chartIndex, phases) {
             yAxis: 0,
             data: [{
                 x: 120,
-                y: 0
+                y: 0,
+                marker: {
+                    enabled: false
+                }
             }, {
                 x: 120,
                 y: phases[1].voltage
@@ -145,7 +256,10 @@ function render_phase_chart(chartIndex, phases) {
             yAxis: 1,
             data: [{
                 x: 120 + phases[1].angle,
-                y: 0
+                y: 0,
+                marker: {
+                    enabled: false
+                }
             }, {
                 x: 120 + phases[1].angle,
                 y: phases[1].current
@@ -159,7 +273,10 @@ function render_phase_chart(chartIndex, phases) {
             yAxis: 0,
             data: [{
                 x: 240,
-                y: 0
+                y: 0,
+                marker: {
+                    enabled: false
+                }
             }, {
                 x: 240,
                 y: phases[2].voltage
@@ -172,7 +289,10 @@ function render_phase_chart(chartIndex, phases) {
             yAxis: 1,
             data: [{
                 x: 240 + phases[2].angle,
-                y: 0
+                y: 0,
+                marker: {
+                    enabled: false
+                }
             }, {
                 x: 240 + phases[2].angle,
                 y: phases[2].current
@@ -182,63 +302,38 @@ function render_phase_chart(chartIndex, phases) {
         }]
     });
 
-    charts.push(chart);
+    item_charts.upper.push(chart);
 
 }
 
 function render_harmonic_sparkchart(chartIndex, harmonics) {
 
-    let chart = Highcharts.chart('harmonic-chart-' + chartIndex, {
-        chart: {
-            type: 'column'
-        },
-        skipClone: true,
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        credits: {
-            enabled: false
-        },
-        title: {
-            text: ''
-        },
+    let chart = Highcharts.chart('harmonic-chart-' + chartIndex, Highcharts.merge(sparkOptions, {
 
-        xAxis: {
-            crosshair: false,
-            visible: false
-        },
-        yAxis: {
-            visible: false
-        },
         tooltip: {
             formatter: function () {
-                return ((this.y > 0) ? "Voltage-" : "Current-") + "HD-" + (parseInt(this.x) + 1) + ": " + Math.abs(this.y);
-            }
-        },
-        plotOptions: {
-            column: {
-                animation: false,
-                pointPadding: 0,
-                borderWidth: 0,
-                stacking: 'normal'
+                return this.series.name + ".harmonic: " + (parseInt(this.x) + 1) + ": " + Math.round(this.y);
             }
         },
         series: [{
-            name: 'Voltage',
-            data: harmonics
-
-        },{
-            name: 'Current',
-            data: harmonics.map(x => x*-1)
-
+            name: 'Voltage.A',
+            data: harmonics,
+            color: '#888888'
         }]
-    });
+    }));
 
-    charts.push(chart);
+    item_charts.lower.push(chart);
 
+}
+
+function delete_item_charts() {
+    for (let key in item_charts) {
+        let chart = item_charts[key];
+        while (item_charts.length) {
+            chart[chart.length - 1].destroy();
+            chart.pop();
+        }
+    }
 }
 
 function render_network_chart() {

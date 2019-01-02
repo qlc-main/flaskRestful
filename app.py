@@ -19,10 +19,10 @@ api = Api(app)
 @app.before_first_request
 def create_tables():
     db.create_all()
-    UserModel('admin', 'admin').save_to_db()
-
-
-
+#    UserModel('admin', 'admin').save_to_db()
+    UserModel('Alfred', 'qlc').save_to_db()
+    UserModel('Gordon', 'qlc').save_to_db()
+    UserModel('Bruce', 'qlc').save_to_db()
 
 jwt = JWTManager(app)
 
