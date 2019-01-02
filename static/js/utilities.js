@@ -6,11 +6,12 @@ let dialog;
 
 function login_success(data) {
     jwtToken = data.access_token;
+    let privilege = data.access_privilege;
     $('.login-form input').val("");
     $('.login-message').hide();
     $('.login-page').hide("clip", {direction: "horizontal"}, 200, function () {
         $('.dashboard').show("clip", {direction: "horizontal"}, 200, function () {
-            load_menu_options();
+            load_menu_options(privilege);
         });
 
     });
@@ -44,13 +45,6 @@ function load_menu_items(menuList) {
         let thisTarget = event.target;
         $(thisTarget).addClass('menu-active');
         load_dashboard_controller(thisTarget.id);
-    });
-
-    // DEFAULT MENU LOAD OPTION
-    $('#menu-list').show("slide", {direction: "right"}, 200, function () {
-        $('#menu-phase-diagnostics').addClass('menu-active');
-        load_diagnostic_items(12);
-        load_sidebar_items(sidebarItemsDiagnostics);
     });
 }
 

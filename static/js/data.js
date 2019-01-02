@@ -6,10 +6,10 @@ let menuItemsAdmin = [
     "Logout",
     "Admin",
     "Settings",
-    "Device Map",
     "Status",
+    "Metering",
     "Phase Diagnostics",
-    "Metering"
+    "Device Map"
 ];
 
 let menuItemsTech = [
@@ -22,8 +22,8 @@ let menuItemsTech = [
 let menuItemsBilling = [
     "Logout",
     "Status",
-    "Metering",
-    "Billing"
+    "Billing",
+    "Metering"
 ];
 
 let filterValues = [
@@ -320,7 +320,7 @@ function get_random_day(base) {
 
     let values = [];
     for (let i = 0; i < day_in_month; i++) {
-        let value = i < day ? 1 * (Math.random() * base/2 + base/2).toFixed(2) : 0;
+        let value = i < day ? 1 * (Math.random() * base / 2 + base / 2).toFixed(2) : 0;
         values.push(value);
     }
     return values;
@@ -329,7 +329,7 @@ function get_random_day(base) {
 function get_random(count, base) {
     let values = [];
     for (let i = 0; i < count; i++) {
-        let value = Math.round((Math.random() * base /2 + base/2));
+        let value = Math.round((Math.random() * base / 2 + base / 2));
         values.push(value);
     }
     return values;
@@ -377,14 +377,25 @@ function ajax_get_api() {
 
 /**************** DISPLAY AJAX ITEMS *******************/
 
-function load_menu_options() {
-    if (username == "Alfred") {
-        load_menu_items(menuItemsAdmin);
-    } else if (username == "Gordon") {
-        load_menu_items(menuItemsTech);
-    } else if (username == "Bruce") {
-        load_menu_items(menuItemsBilling);
+function load_menu_options(privilege) {
+    let menu_items = '';
+    if (privilege == "Alfred") {
+        menu_items = menuItemsAdmin;
+    } else if (privilege == "Gordon") {
+        menu_items = menuItemsTech;
+    } else if (privilege == "Bruce") {
+        menu_items = menuItemsBilling;
     }
+
+    if (menu_items) {
+        load_menu_items(menu_items);
+        $('#menu-list').show("slide", {direction: "right"}, 200, function () {
+            let default_menu_item = 'menu-' + menu_items[menu_items.length - 1].toLowerCase().split(' ').join('-');
+            $('#' + default_menu_item).addClass('menu-active');
+            load_dashboard_controller(default_menu_item);
+        });
+    }
+
 }
 
 function load_dashboard_controller(menuID) {
