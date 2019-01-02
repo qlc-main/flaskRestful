@@ -11,14 +11,19 @@ let gaugeOptions = {
     },
 
     title: null,
-
+    exporting: {
+        enabled: false
+    },
+    credits: {
+        enabled: false
+    },
     pane: {
         center: ['50%', '85%'],
         size: '140%',
         startAngle: -90,
         endAngle: 90,
         background: {
-            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            backgroundColor: '#EEE',
             innerRadius: '60%',
             outerRadius: '100%',
             shape: 'arc'
@@ -33,7 +38,6 @@ let gaugeOptions = {
     yAxis: {
         stops: [
             [0.1, '#55BFFF'], // green
-            [0.5, '#DDDF0D'], // yellow
             [0.9, '#DF5353'] // red
         ],
         lineWidth: 0,
@@ -98,16 +102,41 @@ function update_spark_chart(chartIndex, name, color) {
         item_charts.lower[chartIndex].update({
             series: [{color: color, name: name}]
         });
-        item_charts.lower[chartIndex].series[0].setData(get_harmonics(20, 100));
+        item_charts.lower[chartIndex].series[0].setData(get_random(30, 100));
     }
+}
+
+function render_meter_chart(chartIndex, meter) {
+    let chart = Highcharts.chart('item-chart-upper-'+chartIndex, Highcharts.merge(gaugeOptions, {
+        yAxis: {
+            min: 0,
+            max: 20
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'Power',
+            data: [meter],
+            dataLabels: {
+                format: '<div style="text-align:center"><span style="font-size:25px;color:black">{y}</span><br/>' +
+                    '<span style="font-size:12px;color:silver">kW</span></div>'
+            },
+            tooltip: {
+                valueSuffix: ' kW'
+            }
+        }]
+
+    }));
+
+    item_charts.upper.push(chart);
 }
 
 function render_phase_chart(chartIndex, phases) {
 
-    let chart;
-
-    chart = Highcharts.chart('phase-chart-' + chartIndex, {
-
+    let chart = Highcharts.chart('item-chart-upper-' + chartIndex, {
 
         chart: {
             polar: true
@@ -308,7 +337,7 @@ function render_phase_chart(chartIndex, phases) {
 
 function render_harmonic_sparkchart(chartIndex, harmonics) {
 
-    let chart = Highcharts.chart('harmonic-chart-' + chartIndex, Highcharts.merge(sparkOptions, {
+    let chart = Highcharts.chart('item-chart-lower-' + chartIndex, Highcharts.merge(sparkOptions, {
 
         tooltip: {
             formatter: function () {
@@ -319,6 +348,25 @@ function render_harmonic_sparkchart(chartIndex, harmonics) {
             name: 'Voltage.A',
             data: harmonics,
             color: '#888888'
+        }]
+    }));
+
+    item_charts.lower.push(chart);
+
+}
+
+function render_energy_sparkchart(chartIndex, energy) {
+
+    let chart = Highcharts.chart('item-chart-lower-' + chartIndex, Highcharts.merge(sparkOptions, {
+
+        tooltip: {
+            formatter: function () {
+                return "Day: " + (parseInt(this.x) + 1) + ": " + (this.y).toFixed(2)+" kWh";
+            }
+        },
+        series: [{
+            name: 'Energy',
+            data: energy
         }]
     }));
 

@@ -52,9 +52,9 @@ function html_sidebar_items(filterListObject) {
 
 function html_chart_item(i, name) {
     return `<div class="item">
-                <div class="item-power-chart" id="power-chart-${i}"></div>
-                <div class="item-energy-chart" id="harmonic-chart-${i}"></div>
-                <div class="item-title" id="chart-item-title-${i}">${name}</div>
+                <div class="item-chart-upper" id="item-chart-upper-${i}"></div>
+                <div class="item-chart-lower" id="item-chart-lower-${i}"></div>
+                <div class="item-chart-title" id="item-chart-title-${i}">${name}</div>
             </div>`;
 }
 

@@ -88,9 +88,25 @@ function load_diagnostic_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_phase_item(i, "Apt-" + i));
+        $('#items-page').append(html_chart_item(i, "Apt-" + i));
         render_phase_chart(i, get_phases());
-        render_harmonic_sparkchart(i, get_harmonics(20, 100));
+        render_harmonic_sparkchart(i, get_random(30, 100));
+    }
+
+    $('.item-title').on('click', function (event) {
+        show_harmonic_chart(event.target.id);
+    });
+}
+
+function load_metering_items(count) {
+
+    remove_item_charts();
+
+    for (let i = 0; i < count; i++) {
+        $('#items-page').append(html_chart_item(i, "Apt-" + i));
+        $('#item-chart-upper-'+i).height(175);
+        render_meter_chart(i, 1*(Math.random()*10).toFixed(2));
+        render_energy_sparkchart(i, get_random(14, 100));
     }
 
     $('.item-title').on('click', function (event) {

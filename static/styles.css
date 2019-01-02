@@ -303,23 +303,23 @@ body {
     width: 250px;
 }
 
-.item-phase-chart {
+.item-chart-upper {
     width: 250px;
     height: 250px;
 }
 
-.item-harmonic-chart {
+.item-chart-lower {
     width: 250px;
     height: 75px;
     margin-top: -30px;
 }
 
-.item-title {
+.item-chart-title {
     width: 250px;
     font-weight: bold;
 }
 
-.item-title:hover {
+.item-chart-title:hover {
     cursor: pointer;
     color: #888888;
 }

@@ -22,7 +22,8 @@ let menuItemsTech = [
 let menuItemsBilling = [
     "Logout",
     "Status",
-    "Metering"
+    "Metering",
+    "Billing"
 ];
 
 let filterValues = [
@@ -325,23 +326,23 @@ function get_phases() {
 
 }
 
-function get_energy() {
+function get_random_day(base) {
     let now = new Date();
     let day = now.getDate();
     let day_in_month = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 
     let values = [];
     for (let i = 0; i < day_in_month; i++) {
-        let value = i < day ? 1 * (Math.random() * 10 + 5).toFixed(2) : 0;
+        let value = i < day ? 1 * (Math.random() * base/2 + base/2).toFixed(2) : 0;
         values.push(value);
     }
     return values;
 }
 
-function get_harmonics(count, base) {
+function get_random(count, base) {
     let values = [];
     for (let i = 0; i < count; i++) {
-        let value = Math.round((Math.random() * base));
+        let value = Math.round((Math.random() * base /2 + base/2));
         values.push(value);
     }
     return values;
@@ -403,6 +404,7 @@ function load_dashboard_controller(menuID) {
     if (menuID == "menu-logout") {
         logout_success();
     } else if (menuID == "menu-metering") {
+        load_metering_items(12);
         load_sidebar_items(sidebarItemsMetering);
     } else if (menuID == "menu-phase-diagnostics") {
         load_diagnostic_items(12);
