@@ -1,5 +1,5 @@
 //let item_charts = {upper: [], lower: []};
-let item_charts = []
+let item_charts = [];
 
 let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 let d = new Date();
@@ -95,20 +95,20 @@ let sparkOptions = {
             borderWidth: 0
         }
     }
-}
+};
 
 
 function update_spark_chart(chartIndex, name, color) {
-    if (item_charts['lower-'+chartIndex]) {
-        item_charts['lower-'+chartIndex].update({
+    if (item_charts['lower-' + chartIndex]) {
+        item_charts['lower-' + chartIndex].update({
             series: [{color: color, name: name}]
         });
-        item_charts['lower-'+chartIndex].series[0].setData(get_random(30, 100));
+        item_charts['lower-' + chartIndex].series[0].setData(get_random(30, 100));
     }
 }
 
 function render_meter_chart(chartIndex, meter) {
-    let chart = Highcharts.chart('item-chart-upper-'+chartIndex, Highcharts.merge(gaugeOptions, {
+    let chart = Highcharts.chart('item-chart-upper-' + chartIndex, Highcharts.merge(gaugeOptions, {
         yAxis: {
             min: 0,
             max: 20
@@ -131,7 +131,7 @@ function render_meter_chart(chartIndex, meter) {
         }]
 
     }));
-     item_charts['upper-'+chartIndex] = chart
+    item_charts['upper-' + chartIndex] = chart
     //item_charts.upper.push(chart);
 }
 
@@ -225,7 +225,9 @@ function render_phase_chart(chartIndex, phases) {
                 point: {
                     events: {
                         click: function () {
-                            update_spark_chart(chartIndex, this.series.name, this.series.color);
+                            if(this.y) {
+                                update_spark_chart(chartIndex, this.series.name, this.series.color);
+                            }
                         }
                     }
                 }
@@ -332,8 +334,7 @@ function render_phase_chart(chartIndex, phases) {
         }]
     });
 
-         item_charts['upper-'+chartIndex] = chart
-    //item_charts.upper.push(chart);
+    item_charts['upper-' + chartIndex] = chart
 
 }
 
@@ -353,8 +354,7 @@ function render_harmonic_sparkchart(chartIndex, harmonics) {
         }]
     }));
 
-    //item_charts.lower.push(chart);
-        item_charts['lower-'+chartIndex] = chart;
+    item_charts['lower-' + chartIndex] = chart;
 
 }
 
@@ -364,7 +364,7 @@ function render_energy_sparkchart(chartIndex, energy) {
 
         tooltip: {
             formatter: function () {
-                return "Day: " + (parseInt(this.x) + 1) + ": " + (this.y).toFixed(2)+" kWh";
+                return "Day: " + (parseInt(this.x) + 1) + ": " + (this.y).toFixed(2) + " kWh";
             }
         },
         series: [{
@@ -373,9 +373,149 @@ function render_energy_sparkchart(chartIndex, energy) {
         }]
     }));
 
-    //item_charts.lower.push(chart);
-             item_charts['lower-'+chartIndex] = chart;
+    chart.container.onclick = null;
 
+    item_charts['lower-' + chartIndex] = chart;
+
+}
+
+
+let energyType = ['Active', 'Apparent', 'Reactive Capacitive', 'Reactive Inductive'];
+let direction = ['Import', 'Export'];
+let seriesVisible = [true, false, false, false, false, false, false, false];
+let isDrilldown = false;
+
+function chart_display(chart) {
+    for (let i = 0; i < chart.series.length; i++) {
+        if (seriesVisible[i] && !chart.series[i].visible) {
+            chart.series[i].show();
+        } else if (!seriesVisible[i] && chart.series[i].visible) {
+            chart.series[i].hide();
+        }
+    }
+}
+
+function random_data(count, base, drill) {
+    let values = [];
+    for (let i = 0; i < count; i++) {
+        let value = Math.round((Math.random() * base / 2 + base / 2));
+        values.push({
+            y: value,
+            drilldown: drill
+        });
+    }
+    return values;
+}
+
+function energy_series(count, interval, drill) {
+    let values = [];
+    for (let i = 0; i < 8; i++) {
+        values.push({
+            name: energyType[Math.floor(i / 2)] + ' ' + direction[i % 2],
+            stack: energyType[Math.floor(i / 2)],
+            pointInterval: interval,
+            pointStart: 1546300800000,
+            data: random_data(count, (i % 2 ? -1 : 1) * 5, drill),
+            color: Highcharts.getOptions().colors[i]
+        });
+    }
+    return values;
+}
+
+function render_energy_chart() {
+    let chart = Highcharts.chart('chart-dialog', {
+        chart: {
+            type: 'column',
+            events: {
+                drilldown: function (e) {
+                    if (!e.seriesOptions) {
+
+                        let chart = this;
+
+                        let series = energy_series(24, 3600000, false);
+
+                        for (let i = 0; i < series.length; i++) {
+                            chart.addSingleSeriesAsDrilldown(e.point, series[i]);
+                        }
+                        chart.applyDrilldown();
+                        isDrilldown = true;
+                        chart_display(chart);
+
+                    }
+
+                },
+                drillup: function () {
+                    isDrilldown = false;
+                }
+            }
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: ''
+        },
+        xAxis: [{
+            type: 'datetime'
+        }],
+        yAxis: {
+            title: {
+                text: null
+            },
+            labels: {
+                formatter: function () {
+                    return Math.abs(this.value) + 'kWh';
+                }
+            }
+        },
+
+        plotOptions: {
+            series: {
+                events: {
+                    legendItemClick: function () {
+                        seriesVisible[this.index] = !seriesVisible[this.index];
+                    },
+                },
+                stacking: 'normal'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            formatter: function () {
+                let dateFormat = isDrilldown ? '%l:00 %p' : '%b %e';
+                let unit = Highcharts.dateFormat(dateFormat,
+                    new Date(this.x)) + ': ' +
+                    Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                let name = this.point.series.name.split(' ')[0];
+                if (name == 'Active') {
+                    unit += 'kWh';
+                } else if (name == 'Reactive') {
+                    unit += 'kVAR';
+                } else if (name == 'Apparent') {
+                    unit += 'kVA';
+                }
+                return unit;
+            }
+        },
+
+        series: energy_series(31, 86400000, true),
+        drilldown: {
+            activeAxisLabelStyle: {
+                textDecoration: 'none',
+                fontStyle: 'none',
+                fontWeight: 'none',
+                color: 'black'
+            },
+            series: []
+        }
+    });
+
+    chart_display(chart);
 }
 
 function delete_item_charts() {
@@ -388,10 +528,10 @@ function delete_item_charts() {
     }*/
 
 
-        while (item_charts.length) {
-            chart[chart.length - 1].destroy();
-            chart.pop();
-        }
+    while (item_charts.length) {
+        chart[chart.length - 1].destroy();
+        chart.pop();
+    }
 
 }
 

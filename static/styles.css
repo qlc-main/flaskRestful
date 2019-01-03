@@ -337,6 +337,19 @@ body {
 
 }
 
+.ui-dialog .ui-dialog-title {
+  text-align: center;
+  width: 100%;
+}
+/*
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: center !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none !important;
+}
+*/
 .dialog-position{
     position: relative;
     left: 500px;

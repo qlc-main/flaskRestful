@@ -58,18 +58,3 @@ function html_chart_item(i, name) {
             </div>`;
 }
 
-function html_phase_item(i, name) {
-    return `<div class="item">
-                <div class="item-phase-chart" id="phase-chart-${i}"></div>
-                <div class="item-harmonic-chart" id="harmonic-chart-${i}"></div>
-                <div class="item-title" id="phase-item-title-${i}">${name}</div>
-            </div>`;
-}
-
-function html_meter_item(i, name) {
-    return `<div class="item">
-                <div class="item-meter-chart" id="meter-chart-${i}"></div>
-                <div class="item-energy-chart" id="energy-chart-${i}"></div>
-                <div class="item-title" id="meter-item-title-${i}">${name}</div>
-            </div>`;
-}

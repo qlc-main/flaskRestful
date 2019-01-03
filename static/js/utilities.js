@@ -72,6 +72,11 @@ function show_harmonic_chart(targetID) {
     render_harmonic_sparkchart("dialog", get_harmonics(20, 100));
 }
 
+function show_dialog_chart(targetID, title) {
+    dialog.dialog('option', 'title', title).dialog("open");
+    render_energy_chart();
+}
+
 function remove_item_charts() {
     delete_item_charts();
     $('#items-page').empty();
@@ -87,9 +92,10 @@ function load_diagnostic_items(count) {
         render_harmonic_sparkchart(i, get_random(30, 100));
     }
 
-    $('.item-title').on('click', function (event) {
-        show_harmonic_chart(event.target.id);
+    $('.item-chart-lower').on('click', function (event) {
+        show_dialog_chart(event.target.id, 'Harmonics');
     });
+
 }
 
 function load_metering_items(count) {
@@ -98,13 +104,13 @@ function load_metering_items(count) {
 
     for (let i = 0; i < count; i++) {
         $('#items-page').append(html_chart_item(i, "Apt-" + i));
-        $('#item-chart-upper-'+i).height(175);
-        render_meter_chart(i, 1*(Math.random()*10).toFixed(2));
+        $('#item-chart-upper-' + i).height(175);
+        render_meter_chart(i, 1 * (Math.random() * 10).toFixed(2));
         render_energy_sparkchart(i, get_random(14, 100));
     }
 
-    $('.item-title').on('click', function (event) {
-        show_harmonic_chart(event.target.id);
+    $('.item-chart-lower').on('click', function (event) {
+        show_dialog_chart(event.target.id, 'Energy Usage');
     });
 }
 
@@ -153,16 +159,22 @@ $(function () {
         resizable: false,
         height: 0.8 * ($(window).height() - $('.header').height()),
         width: 0.8 * ($(window).width() - $('.sidebar').width()),
-        position: {my: "center", at: "center", of: $('#items-page')},
         modal: true,
+        position: {my: "center", at: "center", of: $('#items-page')},
         buttons: {
-            "OK": function () {
+            "Units": function () {
+
+            },
+            "Export": function () {
+
+            },
+            "Close": function () {
                 $(this).dialog("close");
             }
         }
     });
 
-    $('#harmonic-chart-dialog').height(dialog.dialog("option", "height") - 150);
-    $('#harmonic-chart-dialog').width(dialog.dialog("option", "width") - 100);
+    $('#chart-dialog').height(dialog.dialog("option", "height") - 150);
+    $('#chart-dialog').width(dialog.dialog("option", "width") - 100);
 
 });
