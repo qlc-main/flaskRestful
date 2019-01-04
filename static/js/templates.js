@@ -20,7 +20,7 @@ function html_sidebar_items(filterListObject) {
         let labelName = category.name.split(' ').join('-').toLowerCase();
 
         category.items.forEach(function(item){
-            filterItems += `<li class="sidebar-list-item">${item.name}`;
+            filterItems += `<li class="sidebar-list-item" name="${item.name}">${item.name}`;
             if(filterListObject.settings.checkbox){
                 filterItems += `<input type="checkbox" name="category-${labelName}" value="${item.name}">`;
             }

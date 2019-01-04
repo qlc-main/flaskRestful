@@ -208,24 +208,25 @@ let sidebarItemsCommissioning = {
 
 let sidebarItemsSettings = {
     settings: {
-        sortable: false
+        sortable: true
     },
     categories: [
         {
-            name: 'Network',
+            name: 'Connected',
             items: [
-                {name: 'IP Address'},
-                {name: 'Remote Server'},
-                {name: 'Local Server'}
+                {name: 'QLoud Database'},
+                {name: 'Bravo-2P'},
+                {name: 'Minicloset-5'},
+                {name: 'QLic-E'}
             ]
         },
         {
-            name: 'Connections',
+            name: 'Options',
             items: [
                 {name: 'Ethernet'},
                 {name: 'WiFi'},
                 {name: 'Bluetooth'},
-                {name: 'RS-485'},
+                {name: 'RS-485/MODBUS'},
                 {name: 'PLC'},
                 {name: 'Pulse'},
                 {name: 'MBus'}

@@ -100,7 +100,6 @@ body {
 }
 
 
-
 /********* LOGIN **************/
 
 .title {
@@ -165,7 +164,6 @@ body {
     color: #CF2038;
     font-size: 16px;
 }
-
 
 
 /********* SIDEBAR **************/
@@ -235,7 +233,7 @@ body {
 }
 
 .sidebar > ul > li:hover {
-    //background-color: #666666;
+/ / background-color: #666666;
     cursor: pointer;
 }
 
@@ -329,7 +327,7 @@ body {
 
 /************** DIALOG **********************/
 
-#energy-chart-dialog{
+#energy-chart-dialog {
     margin: auto;
 }
 
@@ -338,9 +336,11 @@ body {
 }
 
 .ui-dialog .ui-dialog-title {
-  text-align: center;
-  width: 100%;
+    padding-left: 50px;
+    text-align: center;
+    width: 100%;
 }
+
 /*
 .ui-dialog .ui-dialog-buttonpane {
     text-align: center !important;
@@ -350,7 +350,7 @@ body {
     float: none !important;
 }
 */
-.dialog-position{
+.dialog-position {
     position: relative;
     left: 500px;
 }

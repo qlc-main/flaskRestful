@@ -64,8 +64,53 @@
 
     </div>
 </div>
-<div id="dialog-confirm">
+<div id="dialog-charting">
     <div id="chart-dialog"></div>
+</div>
+
+<div id="dialog-settings">
+    <form action="#">
+
+            <label for="baudrate">Baudrate</label>
+            <select name="baudrate" id="baudrate">
+                <option>Auto</option>
+                <option>2400</option>
+                <option>4800</option>
+                <option selected="selected">9600</option>
+                <option>19200</option>
+            </select>
+
+            <label for="data">Data</label>
+            <select name="data" id="data">
+                <option>Auto</option>
+                <option>6</option>
+                <option>7</option>
+                <option selected="selected">8</option>
+                <option>8-E-1</option>
+            </select>
+
+            <label for="parity">Parity</label>
+            <select name="parity" id="parity">
+                <option>Auto</option>
+                <option selected="selected">None</option>
+                <option>Odd</option>
+                <option>Even</option>
+                <option>Mark</option>
+                <option>Space</option>
+            </select>
+
+            <label for="stop">Stop</label>
+            <select name="stop" id="stop">
+                <option>Auto</option>
+                <option selected="selected">1</option>
+                <option>1.5</option>
+                <option>2</option>
+            </select>
+
+            <label for="slave">Slave ID</label>
+            <input name="slave" type="text" id="slave" placeholder="1"/>
+
+    </form>
 </div>
 
 </body>

@@ -53,6 +53,10 @@ function load_sidebar_items(listObject) {
     $('#filter-list').slideUp(200, function () {
         $('#filter-list').empty().append(html_sidebar_items(listObject)).slideDown(200);
 
+        $('.sidebar-list-item').on('click', function (event) {
+            sidebar_controller($(event.target).text());
+        });
+
         $('.sidebar .filter-parameter').on('click', function (event) {
             if ($(this).find('.sidebar-icon-expand').hasClass('fa-caret-down')) {
                 $(this).find('.sidebar-icon-expand').removeClass('fa-caret-down').addClass('fa-caret-right');
@@ -61,9 +65,16 @@ function load_sidebar_items(listObject) {
             }
             $(this).parent('li').find('ul').slideToggle(200);
         });
+
     });
 }
 
+function sidebar_controller(name) {
+    if (name == 'RS-485/MODBUS') {
+        $("#dialog-settings").dialog('option', 'title', name+' '+'Settings').dialog("open");
+        $('#baudrate,#data,#parity,#stop').selectmenu();
+    }
+}
 
 /************* CHARTS **************************/
 
@@ -73,7 +84,7 @@ function show_harmonic_chart(targetID) {
 }
 
 function show_dialog_chart(targetID, title) {
-    dialog.dialog('option', 'title', title).dialog("open");
+    $("#dialog-charting").dialog('option', 'title', title).dialog("open");
     render_energy_chart();
 }
 
@@ -122,21 +133,16 @@ function load_network_chart() {
 /**************** WINDOW EVENTS *******************/
 
 function resize_components() {
-    dialog.dialog("option", "position", {my: "center", at: "center", of: $('#items-page')});
     $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
-    $('#harmonic-chart-dialog').height(dialog.dialog("option", "height") - 100);
-    $('#harmonic-chart-dialog').width(dialog.dialog("option", "width") - 100);
+    $('#items-page').width($('.dashboard').width() - $('.sidebar').width());
+    $('#chart-dialog').height($("#dialog-charting").dialog("option", "height") - 140);
+    $('#chart-dialog').width($("#dialog-charting").dialog("option", "width") - 100);
+    $("#dialog-charting").dialog("option", "position", {my: "center", at: "center", of: $('#items-page')});
 }
 
 /**************** ON READY *******************/
 
 $(function () {
-
-    $(window).resize(function () {
-        resize_components();
-    });
-
-    $('.dashboard, .sidebar, #items-page').height($(window).height() - $('.header').height());
 
     $('.login-page button').on('click', function (event) {
         event.preventDefault();
@@ -154,7 +160,7 @@ $(function () {
         placeholder: 'sort-placeholder'
     });
 
-    dialog = $("#dialog-confirm").dialog({
+    $("#dialog-charting").dialog({
         autoOpen: false,
         resizable: false,
         height: 0.8 * ($(window).height() - $('.header').height()),
@@ -174,7 +180,29 @@ $(function () {
         }
     });
 
-    $('#chart-dialog').height(dialog.dialog("option", "height") - 150);
-    $('#chart-dialog').width(dialog.dialog("option", "width") - 100);
+    $("#dialog-settings").dialog({
+        autoOpen: false,
+        resizable: false,
+        height: 0.5 * ($(window).height() - $('.header').height()),
+        width: 0.5 * ($(window).width() - $('.sidebar').width()),
+        modal: true,
+        position: {my: "center", at: "center", of: $('#items-page')},
+        show: {
+            effect: 'slide',
+            direction: 'down',
+            duration: 200
+        },
+        hide: {
+            effect: 'slide',
+            direction: 'down',
+            duration: 200
+        }
+    });
+
+    resize_components();
+
+    $(window).on('resize', function () {
+        resize_components();
+    });
 
 });
