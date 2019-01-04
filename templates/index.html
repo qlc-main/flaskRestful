@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>QNect Config Page</title>
+    <link rel="shortcut icon" type="image/png" href="/static/img/qlc_favico.png">
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
@@ -18,7 +19,9 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
     <script src="/static/js/data.js"></script>
     <script src="/static/js/charting.js"></script>
@@ -61,8 +64,8 @@
 
     </div>
 </div>
-<div id="dialog-confirm" title="Harmonics">
-    <div id="harmonic-chart-dialog"></div>
+<div id="dialog-confirm">
+    <div id="chart-dialog"></div>
 </div>
 
 </body>

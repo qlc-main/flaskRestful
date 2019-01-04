@@ -57,3 +57,4 @@ function html_chart_item(i, name) {
                 <div class="item-chart-title" id="item-chart-title-${i}">${name}</div>
             </div>`;
 }
+
