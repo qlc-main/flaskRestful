@@ -337,45 +337,6 @@ function get_random(count, base) {
 }
 
 
-/**************** AJAX *******************/
-
-function ajax_auth_api() {
-    let input = $('.login-form input');
-    let user = input.val();
-    let pass = input.next().val();
-    username = user;
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json",
-        url: "/login",
-        data: JSON.stringify({username: user, password: pass}),
-        success: login_success,
-        error: login_fail
-    });
-}
-
-function alert_json(data) {
-    alert(JSON.stringify(data));
-}
-
-function ajax_get_api() {
-    let input = $('.login-form input');
-    let user = input.val();
-    let pass = input.next().val();
-    input.val("");
-    $('.login-message').hide();
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json",
-        url: "/item/chair",
-        headers: {"Authorization": 'Bearer ' + jwtToken},
-        success: alert_json,
-        error: alert_json
-    });
-}
-
 /**************** DISPLAY AJAX ITEMS *******************/
 
 function load_menu_options(privilege) {
@@ -400,19 +361,20 @@ function load_menu_options(privilege) {
 }
 
 function load_dashboard_controller(menuID) {
+    resize_components();
     if (menuID == "menu-logout") {
         logout_success();
     } else if (menuID == "menu-metering") {
-        load_metering_items(12);
         load_sidebar_items(sidebarItemsMetering);
+        load_metering_items(12);
     } else if (menuID == "menu-phase-diagnostics") {
-        load_diagnostic_items(12);
         load_sidebar_items(sidebarItemsDiagnostics);
+        load_diagnostic_items(12);
     } else if (menuID == "menu-status") {
         load_sidebar_items(sidebarItemsStatus);
     } else if (menuID == "menu-device-map") {
-        load_network_chart();
         load_sidebar_items(sidebarItemsStatus);
+        load_network_chart();
     } else if (menuID == "menu-commissioning") {
         load_sidebar_items(sidebarItemsCommissioning);
     } else if (menuID == "menu-settings") {

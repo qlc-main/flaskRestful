@@ -1,6 +1,4 @@
 let jwtToken = "";
-let dialog;
-
 
 /**************** LOGIN *******************/
 
@@ -71,17 +69,12 @@ function load_sidebar_items(listObject) {
 
 function sidebar_controller(name) {
     if (name == 'RS-485/MODBUS') {
-        $("#dialog-settings").dialog('option', 'title', name+' '+'Settings').dialog("open");
+        $("#dialog-settings").dialog('option', 'title', name + ' ' + 'Settings').dialog("open");
         $('#baudrate,#data,#parity,#stop').selectmenu();
     }
 }
 
 /************* CHARTS **************************/
-
-function show_harmonic_chart(targetID) {
-    dialog.dialog("open");
-    render_harmonic_sparkchart("dialog", get_harmonics(20, 100));
-}
 
 function show_dialog_chart(targetID, title) {
     $("#dialog-charting").dialog('option', 'title', title).dialog("open");
@@ -98,7 +91,10 @@ function load_diagnostic_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, "Apt-" + i));
+        $('#items-page').append(html_chart_item(i, "Apt-" + i, 250));
+    }
+
+    for (let i = 0; i < count; i++) {
         render_phase_chart(i, get_phases());
         render_harmonic_sparkchart(i, get_random(30, 100));
     }
@@ -114,11 +110,15 @@ function load_metering_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, "Apt-" + i));
-        $('#item-chart-upper-' + i).height(175);
-        render_meter_chart(i, 1 * (Math.random() * 10).toFixed(2));
-        render_energy_sparkchart(i, get_random(14, 100));
+        $('#items-page').append(html_chart_item(i, "Apt-" + i, 175));
     }
+
+
+    for (let i = 0; i < count; i++) {
+        render_meter_chart(i, 1 * (Math.random() * 10).toFixed(2));
+        render_energy_sparkchart(i, get_random(31, 100));
+    }
+
 
     $('.item-chart-lower').on('click', function (event) {
         show_dialog_chart(event.target.id, 'Energy Usage');
@@ -126,7 +126,6 @@ function load_metering_items(count) {
 }
 
 function load_network_chart() {
-    $('#items-page').width($('.dashboard').width() - $('.sidebar').width());
     render_network_chart();
 }
 
