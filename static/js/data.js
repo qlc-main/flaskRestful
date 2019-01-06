@@ -159,7 +159,7 @@ let sidebarItemsStatus = {
             name: 'Downstream',
             items: [
                 {name: 'Pulse In'},
-                {name: 'MBus'},
+                {name: 'M-Bus'},
                 {name: 'MODBUS RTU'},
                 {name: 'DLSM/COSEM'}
             ]
@@ -229,7 +229,7 @@ let sidebarItemsSettings = {
                 {name: 'RS-485/MODBUS'},
                 {name: 'PLC'},
                 {name: 'Pulse'},
-                {name: 'MBus'}
+                {name: 'M-Bus'}
             ]
         }
     ]

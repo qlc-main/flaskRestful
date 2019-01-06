@@ -51,10 +51,14 @@ function html_sidebar_items(filterListObject) {
 }
 
 function html_chart_item(i, name, height) {
+    let date = "Jan 3";
+    let value = 2.52;
+    let unit = "kWh";
     return `<div class="item">
                 <div class="item-chart-title" id="item-chart-title-${i}">${name}</div>
                 <div class="item-chart-upper" style="height: ${height}px" id="item-chart-upper-${i}"></div>
                 <div class="item-chart-lower" id="item-chart-lower-${i}"></div>
+                <div class="item-chart-lower-text item-chart-unit" id="item-chart-lower-text-${i}">${date}:<span class="item-chart-value"> ${value} </span>${unit}</div>
             </div>`;
 }
 

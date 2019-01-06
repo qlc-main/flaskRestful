@@ -321,6 +321,24 @@ body {
     color: #888888;
 }
 
+.item-chart-lower-text {
+    font-size: 12px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    color: silver;
+    margin-top: -7px;
+}
+
+.item-chart-value {
+    font-size: 20px;
+    color: black;
+}
+
+.item-chart-unit {
+    font-size: 12px;
+    color: #888888;
+}
+
 .item-status-value {
 }
 

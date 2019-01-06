@@ -122,8 +122,8 @@ function render_meter_chart(chartIndex, meter) {
             name: 'Power',
             data: [meter],
             dataLabels: {
-                format: '<div style="text-align:center"><span style="font-size:25px;color:black">{y}</span><br/>' +
-                    '<span style="font-size:12px;color:silver">kW</span></div>'
+                format: '<div style="text-align:center"><span class="item-chart-value">{y}</span><br/>' +
+                    '<span class="item-chart-unit">kW</span></div>'
             },
             tooltip: {
                 valueSuffix: ' kW'
