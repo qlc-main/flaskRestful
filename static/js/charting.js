@@ -364,7 +364,7 @@ function render_energy_sparkchart(chartIndex, energy) {
 
         tooltip: {
             formatter: function () {
-                return "Day: " + (parseInt(this.x) + 1) + ": " + (this.y).toFixed(2) + " kWh";
+                return "Jan: " + (parseInt(this.x) + 1) + ": " + (this.y).toFixed(2) + " kWh";
             }
         },
         series: [{
