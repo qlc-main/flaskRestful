@@ -222,6 +222,17 @@ $(function () {
             effect: 'slide',
             direction: 'down',
             duration: 200
+        },
+                buttons: {
+            "Default": function () {
+
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            },
+            "Set": function () {
+                $(this).dialog("close");
+            }
         }
     });
 
