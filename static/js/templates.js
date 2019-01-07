@@ -50,16 +50,13 @@ function html_sidebar_items(filterListObject) {
     return filterListHTML;
 }
 
-function html_chart_item(i, name, height) {
-    let date = "Jan 3";
-    let value = 2.52;
-    let unit = "kWh";
+function html_chart_item(i, name, height, date, value, unit) {
     return `<div class="item">
                 <div class="item-chart-title" id="item-chart-title-${i}">${name}</div>
                 <div class="item-chart-upper" style="height: ${height}px" id="item-chart-upper-${i}"></div>
                 <div class="item-chart-lower" id="item-chart-lower-${i}"></div>
                 <div class="item-chart-lower-text" id="item-chart-lower-text-${i}">
-                    <span class="item-chart-date">${date}:</span>
+                    <span class="item-chart-pre">${date}:</span>
                     <span class="item-chart-value"> ${value} </span>
                     <span class="item-chart-unit energy-unit">${unit}</span>
                 </div>

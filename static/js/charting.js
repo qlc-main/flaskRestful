@@ -1,9 +1,4 @@
-//let item_charts = {upper: [], lower: []};
 let item_charts = [];
-
-let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-let d = new Date();
-let thisMonth = months[d.getMonth()];
 
 let gaugeOptions = {
 
@@ -104,6 +99,8 @@ function update_spark_chart(chartIndex, name, color) {
             series: [{color: color, name: name}]
         });
         item_charts['lower-' + chartIndex].series[0].setData(get_random(30, 100));
+        $('#item-chart-lower-text-' + chartIndex).find('.item-chart-pre').text(name.split('.').join('-') + "-THD:");
+        $('#item-chart-lower-text-' + chartIndex).find('.item-chart-value').text((10 * Math.random()).toFixed(2));
     }
 }
 
@@ -225,7 +222,7 @@ function render_phase_chart(chartIndex, phases) {
                 point: {
                     events: {
                         click: function () {
-                            if(this.y) {
+                            if (this.y) {
                                 update_spark_chart(chartIndex, this.series.name, this.series.color);
                             }
                         }
@@ -519,18 +516,10 @@ function render_energy_chart() {
 }
 
 function delete_item_charts() {
-    /*for (let key in item_charts) {
-        let chart = item_charts[key];
-        while (item_charts.length) {
-            chart[chart.length - 1].destroy();
-            chart.pop();
-        }
-    }*/
-
 
     while (item_charts.length) {
-        chart[chart.length - 1].destroy();
-        chart.pop();
+        item_charts[item_charts.length - 1].destroy();
+        item_charts.pop();
     }
 
 }

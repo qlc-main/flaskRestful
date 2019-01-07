@@ -84,6 +84,10 @@ function sidebar_controller(name) {
         update_item_unit(name);
     }
 
+    else if (name == 'Harmonics'){
+        $(".item-chart-lower, .item-chart-lower-text").fadeToggle(200);
+    }
+
     for (let i = 0; i < 3; i++) {
         if (name == tennants[i] + "'s Apt (Bravo-" + (i + 1) + ")") {
             $('.item').each(function () {
@@ -113,7 +117,8 @@ function load_diagnostic_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, tennants[i % tennants.length] + "'s Apt (Bravo-" + (i + 1) + ")", 250));
+        $('#items-page').append(html_chart_item(i, tennants[i % tennants.length] + "'s Apt (Bravo-" + (i + 1)
+            + ")", 250,  "Voltage-A-THD", (10*Math.random()).toFixed(2),""));
     }
 
     for (let i = 0; i < count; i++) {
@@ -132,7 +137,8 @@ function load_metering_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, tennants[i % tennants.length] + "'s Apt (Bravo-" + (i + 1) + ")", 175));
+        $('#items-page').append(html_chart_item(i, tennants[i % tennants.length] + "'s Apt (Bravo-" + (i + 1)
+            + ")", 175, "Jan 3", (10*Math.random()).toFixed(2),"kWh"));
     }
 
 
