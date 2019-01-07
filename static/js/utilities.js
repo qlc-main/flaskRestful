@@ -67,11 +67,22 @@ function load_sidebar_items(listObject) {
     });
 }
 
+function update_item_unit(unit){
+    $('.power-unit').text(unit);
+    $('.energy-unit').text(unit+'h');}
+
 function sidebar_controller(name) {
     if (name == 'RS-485/MODBUS') {
         $("#dialog-settings").dialog('option', 'title', name + ' ' + 'Settings').dialog("open");
         $('#baudrate,#data,#parity,#stop').selectmenu();
+    } else if (name == 'kW') {
+        update_item_unit(name);
+    } else if (name == 'kVAR') {
+        update_item_unit(name);
+    } else if (name == 'kVA') {
+        update_item_unit(name);
     }
+
 }
 
 /************* CHARTS **************************/
@@ -91,7 +102,7 @@ function load_diagnostic_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, "Apt-" + i, 250));
+        $('#items-page').append(html_chart_item(i, tennants[i%tennants.length]+"'s Apt (Bravo-m" + (i+1) + ")", 250));
     }
 
     for (let i = 0; i < count; i++) {
@@ -110,7 +121,7 @@ function load_metering_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, "Apt-" + i, 175));
+        $('#items-page').append(html_chart_item(i, tennants[i%tennants.length]+"'s Apt (Bravo-" + (i+1) + ")", 175));
     }
 
 

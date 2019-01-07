@@ -334,7 +334,7 @@ body {
     color: black;
 }
 
-.item-chart-unit {
+.item-chart-unit, .item-chart-date {
     font-size: 12px;
     color: #888888;
 }

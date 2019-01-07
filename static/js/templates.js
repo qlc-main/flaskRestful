@@ -58,7 +58,11 @@ function html_chart_item(i, name, height) {
                 <div class="item-chart-title" id="item-chart-title-${i}">${name}</div>
                 <div class="item-chart-upper" style="height: ${height}px" id="item-chart-upper-${i}"></div>
                 <div class="item-chart-lower" id="item-chart-lower-${i}"></div>
-                <div class="item-chart-lower-text item-chart-unit" id="item-chart-lower-text-${i}">${date}:<span class="item-chart-value"> ${value} </span>${unit}</div>
+                <div class="item-chart-lower-text" id="item-chart-lower-text-${i}">
+                    <span class="item-chart-date">${date}:</span>
+                    <span class="item-chart-value"> ${value} </span>
+                    <span class="item-chart-unit energy-unit">${unit}</span>
+                </div>
             </div>`;
 }
 

@@ -2,6 +2,21 @@ let username = "";
 
 /******** WILL BE REPLACED BY ACTUAL DATA FROM SERVER *****/
 
+let tennants = [
+    "Harvey",
+    "Edward",
+    "Oswald",
+    "Victor",
+    "Selena",
+    "Pamela",
+    "Harleen",
+    "Jonathan",
+    "Jervis",
+    "Hugo",
+    "Antonio",
+    "Jack"
+]
+
 let menuItemsAdmin = [
     "Logout",
     "Admin",
@@ -42,6 +57,20 @@ let sidebarItemsMetering = {
     },
     categories: [
         {
+            name: 'Building',
+            items: [
+                {name: 'Arkham'}
+            ]
+        },
+        {
+            name: 'Tennant',
+            items: [
+                {name: tennants[0]+" Apt-1A"},
+                {name: tennants[1]+" Apt-2B"},
+                {name: tennants[2]+" Apt-3C"}
+            ]
+        },
+                {
             name: 'Device Name',
             items: [
                 {name: 'Bravo-2P'},
@@ -57,27 +86,21 @@ let sidebarItemsMetering = {
             ]
         },
         {
-            name: 'Point Label',
+            name: 'Power Unit',
             items: [
-                {name: 'Apt-1'},
-                {name: 'Apt-2'},
-                {name: 'Apt-3'}
+                {name: 'kW'},
+                {name: 'kVAR'},
+                {name: 'kVA'}
             ]
         },
         {
-            name: 'Power / Energy',
-            items: [
-                {name: 'kW / kWh'},
-                {name: 'kVAR / kVARh'},
-                {name: 'kVA / kVA'}
-            ]
-        },
-        {
-            name: 'Direction',
+            name: 'Energy Type',
             items: [
                 {name: 'Import'},
                 {name: 'Export'},
-                {name: 'Net'}
+                {name: 'Net'},
+                {name: 'Inductive'},
+                {name: 'Capacitive'}
             ]
         }
     ]
@@ -98,7 +121,7 @@ let sidebarItemsDiagnostics = {
             ]
         },
         {
-            name: 'Point Label',
+            name: 'Meter Point',
             items: [
                 {name: 'Apt-1'},
                 {name: 'Apt-2'},
@@ -214,14 +237,13 @@ let sidebarItemsSettings = {
         {
             name: 'Connected',
             items: [
-                {name: 'QLoud Database'},
                 {name: 'Bravo-2P'},
                 {name: 'Minicloset-5'},
                 {name: 'QLic-E'}
             ]
         },
         {
-            name: 'Options',
+            name: 'Configure',
             items: [
                 {name: 'Ethernet'},
                 {name: 'WiFi'},
