@@ -175,6 +175,8 @@ $(function () {
         source: filterValues,
         select: function (event, ui) {
             sidebar_controller((ui.item.value));
+            $(this).val('');
+            return false;
         }
     });
 
