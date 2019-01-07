@@ -67,9 +67,10 @@ function load_sidebar_items(listObject) {
     });
 }
 
-function update_item_unit(unit){
+function update_item_unit(unit) {
     $('.power-unit').text(unit);
-    $('.energy-unit').text(unit+'h');}
+    $('.energy-unit').text(unit + 'h');
+}
 
 function sidebar_controller(name) {
     if (name == 'RS-485/MODBUS') {
@@ -81,6 +82,16 @@ function sidebar_controller(name) {
         update_item_unit(name);
     } else if (name == 'kVA') {
         update_item_unit(name);
+    }
+
+    for (let i = 0; i < 3; i++) {
+        if (name == tennants[i] + "'s Apt (Bravo-" + (i + 1) + ")") {
+            $('.item').each(function () {
+                if ($(this).find('.item-chart-title').text() != name) {
+                    $(this).fadeToggle(200);
+                }
+            });
+        }
     }
 
 }
@@ -102,7 +113,7 @@ function load_diagnostic_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, tennants[i%tennants.length]+"'s Apt (Bravo-m" + (i+1) + ")", 250));
+        $('#items-page').append(html_chart_item(i, tennants[i % tennants.length] + "'s Apt (Bravo-" + (i + 1) + ")", 250));
     }
 
     for (let i = 0; i < count; i++) {
@@ -121,7 +132,7 @@ function load_metering_items(count) {
     remove_item_charts();
 
     for (let i = 0; i < count; i++) {
-        $('#items-page').append(html_chart_item(i, tennants[i%tennants.length]+"'s Apt (Bravo-" + (i+1) + ")", 175));
+        $('#items-page').append(html_chart_item(i, tennants[i % tennants.length] + "'s Apt (Bravo-" + (i + 1) + ")", 175));
     }
 
 
@@ -161,7 +172,10 @@ $(function () {
 
 
     $('#search-input').autocomplete({
-        source: filterValues
+        source: filterValues,
+        select: function (event, ui) {
+            sidebar_controller((ui.item.value));
+        }
     });
 
     $('.sidebar > ul').sortable({

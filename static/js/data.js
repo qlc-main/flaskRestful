@@ -42,12 +42,10 @@ let menuItemsBilling = [
 ];
 
 let filterValues = [
-    "Alfred's Apartment",
-    "Bruce's Apartment",
-    "Gordon's Apartment",
-    "Energy",
-    "Reactive Energy",
-    "Active Energy"
+    "Harvey's Apt (Bravo-1)",
+    "Edward's Apt (Bravo-2)",
+    "Oswald's Apt (Bravo-3)",
+    "RS-485/MODBUS"
 ];
 
 let sidebarItemsMetering = {
@@ -65,9 +63,9 @@ let sidebarItemsMetering = {
         {
             name: 'Tennant',
             items: [
-                {name: tennants[0]+" Apt-1A"},
-                {name: tennants[1]+" Apt-2B"},
-                {name: tennants[2]+" Apt-3C"}
+                {name: tennants[0]+"'s Apt (Bravo-1)"},
+                {name: tennants[1]+"'s Apt (Bravo-2)"},
+                {name: tennants[2]+"'s Apt (Bravo-3)"}
             ]
         },
                 {
